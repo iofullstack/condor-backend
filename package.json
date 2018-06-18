@@ -2,7 +2,7 @@
     "name": "condor-backend",
     "version": "0.0.0",
     "scripts": {
-        "start:server": "babel-node server/index.js"
+        "start:server": "NODE_ENV=development DEBUG=condor-backend* nodemon server/index.js --exec babel-node"
     },
     "author": "iofullstack",
     "license": "MIT",
