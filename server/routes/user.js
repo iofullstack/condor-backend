@@ -8,8 +8,10 @@ const app = express.Router()
 app.get('/', async (req, res) => {
   try {
     const users = await user.findAll()
-    res.status(200).json(questions)
+    res.status(200).json(users)
   } catch (error) {
     handleError(error, res)
   }
 })
+
+export default app

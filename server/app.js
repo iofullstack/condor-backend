@@ -16,8 +16,10 @@ if (process.env.NODE_ENV == 'development') {
     })
 }
 
-app.get('/', (req, res) => res.send('Hola desde express!'))
+app.get('/', (req, res) => {
+  res.send('Hola desde express!')
+})
 app.use('/api/auth', auth)
-// app.use('/api/users', user)
+app.use('/api/users', user)
 
 export default app
