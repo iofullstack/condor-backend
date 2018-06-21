@@ -13,6 +13,16 @@ export default {
     debug(`Find user with id ${_id}`)
     return User
       .findOne({ _id })
-      .populate('permissions')
+      .populate('role')
+      .populate({
+        path: 'permits',
+        options: { sort: '-createdAt' }
+      })
+  },
+
+  create: (u) => {
+    debug(`Creating new user ${u}`)
+    const user = new User(u)
+    return user.save()
   }
 }

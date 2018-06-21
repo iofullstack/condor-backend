@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
-import uniqueValidator from 'mongoose-unique-validator';
+import uniqueValidator from 'mongoose-unique-validator'
 
 const { ObjectId } = Schema.Types
 
@@ -16,9 +16,9 @@ const UserSchema = new Schema({
   address: { type: String, required: true },
   cellphone: { type: Number, required: true },
   createdAt: { type: Date, default: Date.now, required: true },
-  role: { type: String, required: true },
-  permissions: [{ type: ObjectId, ref: 'Permissions', default: [] }]
+  role: { type: ObjectId, ref: 'Role', required: true },
+  permits: [{ type: ObjectId, ref: 'Permit', default: [] }]
 })
 
-UserSchema.plugin(uniqueValidator);
+UserSchema.plugin(uniqueValidator)
 export default mongoose.model('User', UserSchema)

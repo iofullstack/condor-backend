@@ -1,15 +1,15 @@
 import express from 'express'
-import {
-    // required,
-    // userMiddleware,
-    usersMiddleware,
-    users
-} from '../middleware'
+import { user } from '../db-api'
+import { handleError } from '../utils'
 
 const app = express.Router()
 
 // GET /api/users
-app.get('/', usersMiddleware, (req, res) => {
-    res.status(200).json(req,users)
+app.get('/', async (req, res) => {
+  try {
+    const users = await user.findAll()
+    res.status(200).json(questions)
+  } catch (error) {
+    handleError(error, res)
+  }
 })
-
