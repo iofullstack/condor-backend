@@ -1,0 +1,16 @@
+Documentación de las peticiones http:
+
+  ## CLIENT
+
+  POST:
+    /api/clients
+      @send
+        {
+          nit_passport,
+          firstName,
+          lastName
+        }
+      @return
+        {
+          message
+        }
