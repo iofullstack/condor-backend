@@ -4,9 +4,9 @@ import { Client } from '../models'
 const debug = new Debug('condor-cafe:db-api:client')
 
 export default {
-  findAll: () => {
+  findAll: (sort = '-createdAt') => {
     debug('Finding all clients')
-    return User.find()
+    return Client.find().sort(sort)
   },
 
   findById: (_id) => {

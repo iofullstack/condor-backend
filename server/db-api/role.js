@@ -1,5 +1,5 @@
 import Debug from 'debug'
-import { Role } from '../models'
+import { Role, Permit } from '../models'
 
 const debug = new Debug('condor-cafe:db-api:role')
 
@@ -26,11 +26,11 @@ export default {
   },
 
   createPermissions: async (r, p) => {
-    debug(`Creating new permissions ${p}`)
-    const permission = new Permission(p)
-    const savePermissions = await permission.save()
-    q.Permissionss.push(savePermissions)
-    await q.save()
-    return savePermissions
+    debug(`Creating new permit ${p}`)
+    const permit = new Permit(p)
+    const savePermit = await permit.save()
+    r.permits.push(savePermit)
+    await r.save()
+    return savePermit
   }
 }

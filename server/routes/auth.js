@@ -38,28 +38,6 @@ app.post('/signin', async (req, res, next) => {
 
 })
 
-// POST /api/auth/signup
-// app.post('/signup', async (req, res) => {
-//   const { firstName, lastName, email, password } = req.body
-//   const u = new User({
-//     firstName,
-//     lastName,
-//     email,
-//     password: hash(password, 10)
-//   })
-//   const user = await u.save()
-//   debug(`Creating new user: ${user}`)
-//   const token = createToken(user)
-//   res.status(201).json({
-//     message: 'User saved',
-//     token,
-//     userId: user._id,
-//     firstName,
-//     lastName,
-//     email
-//   })
-// })
-
 const createToken = (user) => jwt.sign({ user }, secret, { expiresIn: 86400 })
 
 function handleLoginFailed(res, message) {

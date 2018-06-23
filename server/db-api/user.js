@@ -4,9 +4,9 @@ import { User } from '../models'
 const debug = new Debug('condor-cafe:db-api:user')
 
 export default {
-  findAll: () => {
+  findAll: (sort = '-createdAt') => {
     debug('Finding all users')
-    return User.find().populate('permissions')
+    return User.find().populate('role').populate('permits').sort(sort)
   },
 
   findById: (_id) => {

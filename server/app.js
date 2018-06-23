@@ -1,6 +1,6 @@
 import express from 'express'
 import bodyParser from 'body-parser'
-import { auth, user } from './routes'
+import { auth, user, client } from './routes'
 
 const app = express()
 
@@ -21,5 +21,6 @@ app.get('/', (req, res) => {
 })
 app.use('/api/auth', auth)
 app.use('/api/users', user)
+app.use('/api/clients', client)
 
 export default app
