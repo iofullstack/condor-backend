@@ -4,18 +4,6 @@ import jwt from 'jsonwebtoken'
 
 const debug = new Debug('condor-backend:auth')
 
-export const users = [
-  {
-    firstName: 'Gary',
-    lastName: 'Guzmán',
-    email: 'gary@platzi.com',
-    password: '123456',
-    _id: 123
-  }
-]
-
-export const findUserByEmail = e => users.find(({ email }) => email === e)
-
 export const required = (req, res, next) => {
   jwt.verify(req.query.token, secret, (err, token) => {
     if (err) {
