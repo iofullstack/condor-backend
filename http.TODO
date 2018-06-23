@@ -1,7 +1,54 @@
 Documentación de las peticiones http:
 
-  ## CLIENT
+  ## Permit
+  POST:
+    /api/permits
+      @send {
+        description: 'It's permit'
+      }
+      @return {
+        message: 'Permit saved',
+        savedPermit: Permit
+      }
 
+  ## Role
+  POST:
+    /api/roles
+      @send {
+        title: 'It's title'
+      }
+      @return {
+        message: 'Role saved',
+        savedRole: Role
+      }
+
+  ## USER
+  POST:
+    /api/users
+      @send
+        {
+          ci
+          exp
+          firstName
+          lastName
+          avatar: 'base64'
+          email
+          password
+          gender
+          birthdate
+          address
+          cellphone
+          createdAt: Date
+          role: 'Waiter'
+          permits: ['Permiso1','Permiso3','Permiso3','Permiso4']
+        }
+      @return
+        {
+          message: 'User saved',
+          savedUser: User
+        }
+  
+  ## CLIENT
   POST:
     /api/clients
       @send
@@ -12,5 +59,7 @@ Documentación de las peticiones http:
         }
       @return
         {
-          message
+          message: 'Client saved'
+          savedClient: Client
         }
+
