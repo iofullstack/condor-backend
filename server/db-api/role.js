@@ -6,7 +6,7 @@ const debug = new Debug('condor-cafe:db-api:role')
 export default {
   findAll: () => {
     debug('Finding all role')
-    return Role.find().populate('permissions')
+    return Role.find().populate('permits')
   },
 
   findById: (_id) => {
@@ -25,7 +25,7 @@ export default {
     return role.save()
   },
 
-  createPermissions: async (r, p) => {
+  createPermit: async (r, p) => {
     debug(`Creating new permit ${p}`)
     const permit = new Permit(p)
     const savePermit = await permit.save()

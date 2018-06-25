@@ -1,5 +1,5 @@
 import express from 'express'
-import { clientMiddleware } from '../middleware'
+import { required, clientMiddleware } from '../middleware'
 import { client } from '../db-api'
 import { handleError } from '../utils'
 
@@ -25,6 +25,7 @@ app.get('/:id', clientMiddleware, (req, res) => {
 })
 
 // POST /api/clients
+// app.post('/', required, async (req, res) => {
 app.post('/', async (req, res) => {
   const { nit_passport, firstName, lastName } = req.body
   const c = {

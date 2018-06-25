@@ -1,54 +1,53 @@
 Documentación de las peticiones http:
 
-  ## Permit
-  POST:
-    /api/permits
-      @send {
-        description: 'It's permit'
-      }
+  ## Role
+  GET:
+    /api/roles
+      @send {}
       @return {
-        message: 'Permit saved',
-        savedPermit: Permit
+        [Role] --> vector de tipo RoleSchema(_id,title,permits=[Permit],createdAt)
       }
 
-  ## Role
+    /api/roles/:id
+      @send {}
+      @return {
+        Role --> objeto de tipo RoleSchema(_id, title, permits=[Permit], createdAt)
+      }
+
   POST:
     /api/roles
       @send {
-        title: 'It's title'
+        title: 'It is a title' --> Ejemplo 'Witer' or 'Admin'
       }
       @return {
         message: 'Role saved',
-        savedRole: Role
+        savedRole: Role --> objeto de tipo RoleSchema(_id, title, permits=[Permit], createdAt)
       }
 
-  ## USER
+  ## Permit
   POST:
-    /api/users
-      @send
-        {
-          ci
-          exp
-          firstName
-          lastName
-          avatar: 'base64'
-          email
-          password
-          gender
-          birthdate
-          address
-          cellphone
-          createdAt: Date
-          role: 'Waiter'
-          permits: ['Permiso1','Permiso3','Permiso3','Permiso4']
-        }
-      @return
-        {
-          message: 'User saved',
-          savedUser: User
-        }
-  
+    /api/roles/:id/permits
+      @send {
+        description: 'It is a description' --> Ejemplo 'Registrar Cliente' or 'Kardex de productos'
+      }
+      @return {
+        message: 'Permit saved',
+        savedPermit: Permit --> objeto de tipo PermitSchema(_id, description, createdAt)
+      }
+
   ## CLIENT
+  GET:
+    /api/clients
+      @send {}
+      @return {
+        [Client] --> vector de tipo ClientSchema(_id, nit_passport, firstName, lastName, createdAt)
+      }
+
+    /api/clients/:id
+      @send {}
+      @return {
+        Client --> objeto de tipo ClientSchema(_id, nit_passport, firstName, lastName, createdAt)
+      }
   POST:
     /api/clients
       @send
@@ -60,6 +59,31 @@ Documentación de las peticiones http:
       @return
         {
           message: 'Client saved'
-          savedClient: Client
+          savedClient: Client --> objeto de tipo ClientSchema(_id, nit_passport, firstName, lastName, createdAt)
         }
 
+  ## USER
+  POST:
+    /api/users
+      @send
+        {
+          ci
+          exp --> Expirado. Ejemplo 'Tj' or 'Ch'
+          firstName
+          lastName
+          avatar: 'base64'
+          email
+          password
+          gender
+          birthdate
+          address
+          cellphone
+          createdAt: Date
+          role: 'Waiter'
+          permits: ['Permiso1','Permiso2','Permiso3','Permiso4']
+        }
+      @return
+        {
+          message: 'User saved',
+          savedUser: User
+        }
