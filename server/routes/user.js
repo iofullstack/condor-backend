@@ -2,7 +2,6 @@ import express from 'express'
 import { user } from '../db-api'
 import { handleError } from '../utils'
 import { userMiddleware } from '../middleware'
-import { User } from '../models'
 import { hashSync as hash } from 'bcryptjs'
 
 const app = express.Router()
@@ -28,25 +27,31 @@ app.get('/:id', userMiddleware, (req, res) => {
 
 // POST /api/users
 app.post('/', async (req, res) => {
-  const { ci, exp, firstName, lastName, avatar, email, password, gender, birthdate, address, cellphone, createdAt, role, permits } = req.body
-  // const u = req.body
-  const u = new User({
-    ci, exp, firstName, lastName, avatar, email,
-    password: hash(password, 10), gender, birthdate, address,
-    cellphone, createdAt, role, permits
-  })
-  console.log(u)
+  const u = req.body
+  u.password = hash(u.password, 10)
 
-  /*try {
+  try {
+    // var fs      = require('fs'),
+    // data        = fs.readFileSync('base64', 'utf8'),
+    // base64Data  = u.avatar,
+    // binaryData;
+
+    // base64Data  =   data.replace(/^data:image\/png;base64,/, "");
+    // base64Data  +=  base64Data.replace('+', ' ');
+    // binaryData  =   new Buffer(base64Data, 'base64').toString('binary');
+
+    // fs.writeFile("out.png", binaryData, "binary", function (err) {
+    //     console.log(err); // writes out file without error, but it's not a valid image
+    // });
+
     const savedUser = await user.create(u)
-    debug(`Creating new user: ${savedUser}`)
     res.status(201).json({
       message: 'User saved',
       savedUser
     })
   } catch (error) {
     handleError(error, res)
-  }*/
+  }
 
 })
 

@@ -79,8 +79,8 @@ Documentación de las peticiones http:
           address
           cellphone
           createdAt: Date
-          role: 'Waiter'
-          permits: ['Permiso1','Permiso2','Permiso3','Permiso4']
+          role: '5b312d04d5ffce22bae6b75d' --> _id de Role
+          permits: ['5b312f0c3013f7248b13cf5e','5b3136cf2f7b6f2b245b0718']  --> _id de Permit
         }
       @return
         {
