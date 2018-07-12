@@ -6,7 +6,7 @@ const debug = new Debug('condor-cafe:db-api:user')
 export default {
   findAll: (sort = '-createdAt') => {
     debug('Finding all users')
-    return User.find().populate('role').populate('permits').sort(sort)
+    return User.find().populate('s_profile').sort(sort)
   },
 
   findById: (_id) => {

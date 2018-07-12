@@ -16,8 +16,7 @@ const UserSchema = new Schema({
   address: { type: String, required: true },
   cellphone: { type: Number, required: true },
   createdAt: { type: Date, default: Date.now, required: true },
-  role: { type: ObjectId, ref: 'Role', required: true },
-  permits: [{ type: ObjectId, ref: 'Permit', default: [] }]
+  s_profile: { type: ObjectId, ref: 'SecurityProfile', required: true }
 })
 
 UserSchema.plugin(uniqueValidator)
