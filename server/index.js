@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import { mongoUrl } from './config'
 
 const PORT = 3500
+// const PORT = 80
 const debug = Debug('condor-backend:root')
 
 async function start() {
