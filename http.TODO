@@ -1,32 +1,56 @@
 Documentación de las peticiones http:
 
-  ## Role
+  ## SecurityProfile
   GET:
-    /api/roles
+    /api/s_profile
       @send {}
       @return {
-        [Role] --> vector de tipo RoleSchema(_id,title,permits=[Permit],createdAt)
+        [SecurityProfile] --> vector de tipo SecurityProfileSchema(_id,name,permits=[Permit])
+      }
+
+    /api/s_profile/:id
+      @send {}
+      @return {
+        Role --> objeto de tipo SecurityProfileSchema(_id, name, permits=[Permit])
+      }
+
+  POST:
+    /api/s_profile
+      @send {
+        name: 'Witer-1' --> Ejemplo 'Witer' or 'Admin'
+      }
+      @return {
+        message: 'SecurityProfile saved',
+        savedSecurityProfile: SecurityProfile --> objeto de tipo SecurityProfileSchema(_id, name, permits=[Permit], createdAt)
+      }
+
+  ## Module
+  GET:
+    /api/modules
+      @send {}
+      @return {
+        [Module] --> vector de tipo ModuleSchema(_id,title,permits=[Permit],createdAt)
       }
 
     /api/roles/:id
       @send {}
       @return {
-        Role --> objeto de tipo RoleSchema(_id, title, permits=[Permit], createdAt)
+        Role --> objeto de tipo ModuleSchema(_id, title, permits=[Permit], createdAt)
       }
 
   POST:
-    /api/roles
+    /api/modules
       @send {
-        title: 'It is a title' --> Ejemplo 'Witer' or 'Admin'
+        name: 'Witer-1' --> Ejemplo 'Witer' or 'Admin'
       }
       @return {
-        message: 'Role saved',
-        savedRole: Role --> objeto de tipo RoleSchema(_id, title, permits=[Permit], createdAt)
+        message: 'Module saved',
+        savedModule: Module --> objeto de tipo ModuleSchema(_id, name, permits=[Permit], createdAt)
       }
 
   ## Permit
   POST:
-    /api/roles/:id/permits
+    /api/module/:id/permits
       @send {
         description: 'It is a description' --> Ejemplo 'Registrar Cliente' or 'Kardex de productos'
       }
@@ -79,8 +103,8 @@ Documentación de las peticiones http:
           address
           cellphone
           createdAt: Date
-          role: 'Waiter'
-          permits: ['Permiso1','Permiso2','Permiso3','Permiso4']
+          role: '5b312d04d5ffce22bae6b75d' --> _id de Role
+          permits: ['5b312f0c3013f7248b13cf5e','5b3136cf2f7b6f2b245b0718']  --> _id de Permit
         }
       @return
         {

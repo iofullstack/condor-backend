@@ -1,52 +1,51 @@
 import express from 'express'
-import { required, roleMiddleware } from '../middleware'
-import { role } from '../db-api'
+import { required, moduleMiddleware } from '../middleware'
+import { module } from '../db-api'
 import { handleError } from '../utils'
 
 const app = express.Router()
 
-// GET /api/roles
+// GET /api/modules
 app.get('/', async (req, res) => {
     try {
-        const roles = await role.findAll()
-        res.status(200).json(roles)
+        const modules = await module.findAll()
+        res.status(200).json(modules)
     } catch (error) {
         handleError(error, res)
     }
 })
 
-// GET /api/roles/:id
-app.get('/:id', roleMiddleware, (req, res) => {
+// GET /api/modules/:id
+app.get('/:id', moduleMiddleware, (req, res) => {
     try {
-        res.status(200).json(req.role)
+        res.status(200).json(req.module)
     } catch (error) {
         handleError(error, res)
     }
 })
 
-// POST /api/roles
+// POST /api/modules
 // app.post('/', required, async (req, res) => {
 app.post('/', async (req, res) => {
-    const { title } = req.body
+    const { name } = req.body
     try {
-        const savedRole = await role.create( {title} )
+        const savedModule = await module.create( {name} )
         res.status(201).json({
-            message: 'Role saved',
-            savedRole
+            message: 'Module saved',
+            savedModule
         })
     } catch(error) {
         handleError(error, res)
     }
 })
 
-// POST /api/roles/:id/permits
+// POST /api/modules/:id/permits
 // app.post('/:id/permits', required, roleMiddleware, async (req, res) => {
-app.post('/:id/permits', roleMiddleware, async (req, res) => {
+app.post('/:id/permits', moduleMiddleware, async (req, res) => {
     const p = req.body
-    const r = req.role
-    p.createdAt = new Date()
+    const m = req.module
     try {
-        const savedPermit = await role.createPermit(r, p)
+        const savedPermit = await module.createPermit(m, p)
         res.status(201).json({
             message: 'Permit saved',
             savedPermit

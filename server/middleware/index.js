@@ -1,4 +1,6 @@
 export * from './auth'
 export * from './user'
 export * from './client'
-export * from './role'
+export * from './module'
+export * from './security-profile'
+export * from './general'
