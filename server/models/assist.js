@@ -5,4 +5,4 @@ const AssistSchema = new Schema({
   leave: { type: Date, required: true, default: Date.now }
 })
 
-export default mongoose.model('Assist', PermitSchema)
+export default mongoose.model('Assist', AssistSchema)
