@@ -26,16 +26,20 @@ app.get('/user/:id', attendMiddleware, (req, res) => {
 // POST /api/attend/enter/user/:id
 // app.post('/', required, async (req, res) => {
 app.post('/enter/user/:id', userMiddleware, existAttendMiddleware, async (req, res) => {
-  const { title, description, icon } = req.body
-  const q = {
-    title,
-    description,
-    icon,
-    user: req.user._id
-  }
+  const { note } = req.body
+
   try {
-    const savedQuestion = await question.create(q)
-    res.status(201).json(savedQuestion)
+    if (req.user) {
+      const att = { note, user: req.user._id }
+      if (req.attend) {
+        res.status(201).json({msg: "Ya marcaste entrada cabron!!"})
+      } else {
+        const saveAttend = await attend.createAttend(att);
+        res.status(201).json(saveAttend)
+      }
+    } else {
+      res.status(201).json({msg: note})
+    }
   } catch (error) {
     handleError(error, res)
   }
@@ -43,18 +47,18 @@ app.post('/enter/user/:id', userMiddleware, existAttendMiddleware, async (req, r
 })
 
 // POST /api/questions/:id/answers
-app.post('/:id/answers', required, questionMiddleware, async (req, res) => {
-  const a = req.body
-  const q = req.question
-  a.createdAt = new Date()
-  a.user = new User(req.user)
-  console.log(a.user)
-  try {
-    const savedAnswer = await question.createAnswer(q, a)
-    res.status(201).json(savedAnswer)
-  } catch (error) {
-    handleError(error, res)
-  }
-})
+// app.post('/:id/answers', required, questionMiddleware, async (req, res) => {
+//   const a = req.body
+//   const q = req.question
+//   a.createdAt = new Date()
+//   a.user = new User(req.user)
+//   console.log(a.user)
+//   try {
+//     const savedAnswer = await question.createAnswer(q, a)
+//     res.status(201).json(savedAnswer)
+//   } catch (error) {
+//     handleError(error, res)
+//   }
+// })
 
 export default app

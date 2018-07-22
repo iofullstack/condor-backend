@@ -1,8 +1,10 @@
 import mongoose, { Schema } from 'mongoose'
 
+const { ObjectId } = Schema.Types
+
 const AssistSchema = new Schema({
-  enter: { type: Date, required: true, default: Date.now },
-  leave: { type: Date, required: true, default: Date.now },
+  enter: { type: String, required: true },
+  leave: { type: String, required: false },
   attend: { type: ObjectId, ref: 'User', required: true }
 })
 
