@@ -5,7 +5,7 @@ const { ObjectId } = Schema.Types
 const AssistSchema = new Schema({
   enter: { type: String, required: true },
   leave: { type: String, required: false },
-  attend: { type: ObjectId, ref: 'User', required: true }
+  attend: { type: ObjectId, ref: 'Attend', required: true }
 })
 
 export default mongoose.model('Assist', AssistSchema)

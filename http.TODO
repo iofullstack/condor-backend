@@ -111,3 +111,22 @@ Documentación de las peticiones http:
           message: 'User saved',
           savedUser: User
         }
+
+  ## SecurityProfile
+  POST:
+    /api/attend/enter/user/:id
+      @send
+        {
+          note?
+        }
+      @return
+        {
+          Attend or Assist
+        }
+    /api/attend/leave/user/:id
+      @send {}
+      @return
+        {
+          Assist
+        }
+

@@ -32,13 +32,21 @@ app.post('/enter/user/:id', userMiddleware, existAttendMiddleware, async (req, r
     if (req.user) {
       const att = { note, user: req.user._id }
       if (req.attend) {
-        res.status(201).json({msg: "Ya marcaste entrada cabron!!"})
+        const idAssist = req.attend.assist[req.attend.assist.length - 1]._id
+        const assist = await attend.findAssistById(idAssist)
+        if(assist.leave) {
+          const saveAssist = await attend.createEnterAssist(req.attend)
+          res.status(201).json({error: false, response: saveAssist})
+        }
+        else {
+          res.status(201).json({error: false, msg: "Ya marcó entrada"})
+        }
       } else {
         const saveAttend = await attend.createAttend(att);
-        res.status(201).json(saveAttend)
+        res.status(201).json({error: false, response: saveAttend})
       }
     } else {
-      res.status(201).json({msg: note})
+      res.status(201).json({error: false, msg: "Usuario no registrado"})
     }
   } catch (error) {
     handleError(error, res)
@@ -46,19 +54,33 @@ app.post('/enter/user/:id', userMiddleware, existAttendMiddleware, async (req, r
 
 })
 
-// POST /api/questions/:id/answers
-// app.post('/:id/answers', required, questionMiddleware, async (req, res) => {
-//   const a = req.body
-//   const q = req.question
-//   a.createdAt = new Date()
-//   a.user = new User(req.user)
-//   console.log(a.user)
-//   try {
-//     const savedAnswer = await question.createAnswer(q, a)
-//     res.status(201).json(savedAnswer)
-//   } catch (error) {
-//     handleError(error, res)
-//   }
-// })
+// POST /api/attend/leave/user/:id
+// app.post('/', required, async (req, res) => {
+  app.post('/leave/user/:id', userMiddleware, existAttendMiddleware, async (req, res) => {
+    const { note } = req.body
+
+    try {
+      if (req.user) {
+        if (req.attend) {
+          const idAssist = req.attend.assist[req.attend.assist.length - 1]._id
+          const assist = await attend.findAssistById(idAssist)
+          if(assist.leave) {
+            res.status(201).json({error: false, msg: "Primero debe marcar entrada, antes de salida"})
+          }
+          else {
+            const saveAssist = await attend.createLeaveAssist(assist)
+            res.status(201).json({error: false, response: await attend.findAssistById(saveAssist._id)})
+          }
+        } else {
+          res.status(201).json({error: false, msg: "Primero debe marcar entrada, antes de salida"})
+        }
+      } else {
+        res.status(201).json({error: false, msg: "Usuario no registrado"})
+      }
+    } catch (error) {
+      handleError(error, res)
+    }
+  
+  })
 
 export default app

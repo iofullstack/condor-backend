@@ -1,8 +1,14 @@
 Modulo de Asistencia:
 ☐ empleado marque entrada:
 Si existe usuario --si-> Si existe un attend en ese dia --si-> encontrar ultimo elemento de attend.assist ---> æ
-                    |                                     |__no_> create Attend y create Assist 'enter' {status:true,result:{...}}
-                    |__no_> { status: false msg: "Usuario no registrado" result:{} }
-æ ---> si existe leave --si-> crea 'enter' en assist {status:true,result:{...}}
+                    |                                     |__no_> create Attend y create Assist 'enter' { error: false, response: Attend }
+                    |__no_> { error: false, msg: "Usuario no registrado" }
+æ ---> si existe leave --si-> crea 'enter' en assist { error:false, response: Assist }
                         |__no_> "Ya marcó entrada"
-    ☐ 
+
+☐ empleado marca salida:
+Si existe usuario --si-> Si existe un attend en ese dia --si-> encontrar ultimo elemento de attend.assist ---> æ
+                    |                                     |__no_> { error: false, msg: "Primero debe marcar entrada, antes de salida" }
+                    |__no_> { error: false, msg: "Usuario no registrado" }
+æ ---> si existe leave --si-> { error: false, msg: "Primero debe marcar entrada, antes de salida" }
+                         |__no_> actualiza 'leave' en assist y responde: {error: false, response: Assist}

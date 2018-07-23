@@ -12,7 +12,8 @@ export const attendMiddleware = async (req, res, next) => {
 
 export const existAttendMiddleware = async (req, res, next) => {
   try {
-    req.attend = await attend.findByDay(new Date().toISOString().slice(0,10) ,req.params.id)
+    if (req.user)
+      req.attend = await attend.findByDay(new Date().toISOString().slice(0,10) ,req.params.id)
     next()
   } catch (err) {
     handleError(err, res)
