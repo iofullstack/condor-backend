@@ -49,4 +49,22 @@ Object.defineProperty(exports, 'SecurityProfile', {
   }
 });
 
+var _assist = require('./assist');
+
+Object.defineProperty(exports, 'Assist', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_assist).default;
+  }
+});
+
+var _attend = require('./attend');
+
+Object.defineProperty(exports, 'Attend', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_attend).default;
+  }
+});
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

@@ -49,4 +49,13 @@ Object.defineProperty(exports, 's_profile', {
   }
 });
 
+var _attend = require('./attend');
+
+Object.defineProperty(exports, 'attend', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_attend).default;
+  }
+});
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

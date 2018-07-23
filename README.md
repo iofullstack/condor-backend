@@ -46,4 +46,6 @@ The app will automatically reload if you change any of the source files.
 3. run server
 ```sh
   nodemon server/index.js --exec babel-node
+  or
+  npm run start:win
 ```

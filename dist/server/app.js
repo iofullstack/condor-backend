@@ -38,5 +38,6 @@ app.use('/api/users', _routes.user);
 app.use('/api/clients', _routes.client);
 app.use('/api/modules', _routes.module);
 app.use('/api/s_profile', _routes.s_profile);
+app.use('/api/attend', _routes.attend);
 
 exports.default = app;

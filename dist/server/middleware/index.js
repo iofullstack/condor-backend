@@ -64,6 +64,18 @@ Object.keys(_securityProfile).forEach(function (key) {
   });
 });
 
+var _attend = require('./attend');
+
+Object.keys(_attend).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _attend[key];
+    }
+  });
+});
+
 var _general = require('./general');
 
 Object.keys(_general).forEach(function (key) {
