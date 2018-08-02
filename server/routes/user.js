@@ -1,7 +1,7 @@
 import express from 'express'
 import { user } from '../db-api'
 import { handleError } from '../utils'
-import { userMiddleware, imageMiddleware } from '../middleware'
+import { userMiddleware, imageMiddleware, userMiddlewareCI } from '../middleware'
 import { hashSync as hash } from 'bcryptjs'
 
 const app = express.Router()
@@ -18,6 +18,15 @@ app.get('/', async (req, res) => {
 
 // GET /api/users/:id
 app.get('/:id', userMiddleware, (req, res) => {
+  try {
+    res.status(200).json(req.user)
+  } catch (error) {
+    handleError(error, res)
+  }
+})
+
+// GET /api/users/ci/:ci
+app.get('/ci/:ci', userMiddlewareCI, (req, res) => {
   try {
     res.status(200).json(req.user)
   } catch (error) {

@@ -57,8 +57,6 @@ app.post('/enter/user/:id', userMiddleware, existAttendMiddleware, async (req, r
 // POST /api/attend/leave/user/:id
 // app.post('/', required, async (req, res) => {
   app.post('/leave/user/:id', userMiddleware, existAttendMiddleware, async (req, res) => {
-    const { note } = req.body
-
     try {
       if (req.user) {
         if (req.attend) {

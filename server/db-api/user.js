@@ -20,6 +20,12 @@ export default {
       })
   },
 
+  findByCI: (ci) => {
+    debug(`Find user with CI ${ci}`)
+    return User
+      .findOne({ ci })
+  },
+
   create: (u) => {
     debug(`Creating new user ${u}`)
     const user = new User(u)
