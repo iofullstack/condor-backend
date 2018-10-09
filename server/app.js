@@ -16,9 +16,6 @@ app.use(bodyParser.json())
     })
 // }
 
-app.get('/', (req, res) => {
-  res.send('Hola desde express!')
-})
 app.use('/api/auth', auth)
 app.use('/api/users', user)
 app.use('/api/clients', client)
