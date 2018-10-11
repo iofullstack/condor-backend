@@ -12,3 +12,6 @@ Si existe usuario --si-> Si existe un attend en ese dia --si-> encontrar ultimo 
                     |__no_> { error: false, msg: "Usuario no registrado" }
 æ ---> si existe leave --si-> { error: false, msg: "Primero debe marcar entrada, antes de salida" }
                          |__no_> actualiza 'leave' en assist y responde: {error: false, response: Assist}
+
+Modulo de Pedido:
+

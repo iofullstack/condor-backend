@@ -69,6 +69,15 @@ app.get('/:id', _middleware.userMiddleware, function (req, res) {
   }
 });
 
+// GET /api/users/ci/:ci
+app.get('/ci/:ci', _middleware.userMiddlewareCI, function (req, res) {
+  try {
+    res.status(200).json(req.user);
+  } catch (error) {
+    (0, _utils.handleError)(error, res);
+  }
+});
+
 // POST /api/users
 app.post('/', _middleware.imageMiddleware, function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(req, res) {

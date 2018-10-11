@@ -1,7 +1,7 @@
 import express from 'express'
 import { user } from '../db-api'
 import { handleError } from '../utils'
-import { userMiddleware, imageMiddleware, userMiddlewareCI } from '../middleware'
+import { userMiddleware, pathAvatarMiddleware, imageMiddleware, userMiddlewareCI } from '../middleware'
 import { hashSync as hash } from 'bcryptjs'
 
 const app = express.Router()
@@ -35,7 +35,7 @@ app.get('/ci/:ci', userMiddlewareCI, (req, res) => {
 })
 
 // POST /api/users
-app.post('/', imageMiddleware, async (req, res) => {
+app.post('/', pathAvatarMiddleware, imageMiddleware, async (req, res) => {
   const u = req.body
   u.password = hash(u.password, 10)
   u.avatar = req.imageInfo.fileName

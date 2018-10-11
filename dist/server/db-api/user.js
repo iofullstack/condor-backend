@@ -30,6 +30,11 @@ exports.default = {
     });
   },
 
+  findByCI: function findByCI(ci) {
+    debug('Find user with CI ' + ci);
+    return _models.User.findOne({ ci: ci });
+  },
+
   create: function create(u) {
     debug('Creating new user ' + u);
     var user = new _models.User(u);

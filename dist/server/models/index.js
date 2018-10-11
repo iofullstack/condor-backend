@@ -67,4 +67,22 @@ Object.defineProperty(exports, 'Attend', {
   }
 });
 
+var _menu = require('./menu');
+
+Object.defineProperty(exports, 'Menu', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_menu).default;
+  }
+});
+
+var _categoryMenu = require('./category-menu');
+
+Object.defineProperty(exports, 'CategoryMenu', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_categoryMenu).default;
+  }
+});
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

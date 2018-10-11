@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.userMiddleware = undefined;
+exports.userMiddlewareCI = exports.userMiddleware = undefined;
 
 var _dbApi = require('../db-api');
 
@@ -44,5 +44,41 @@ var userMiddleware = exports.userMiddleware = function () {
 
   return function userMiddleware(_x, _x2, _x3) {
     return _ref.apply(this, arguments);
+  };
+}();
+
+var userMiddlewareCI = exports.userMiddlewareCI = function () {
+  var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(req, res, next) {
+    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.prev = 0;
+            _context2.next = 3;
+            return _dbApi.user.findByCI(req.params.ci);
+
+          case 3:
+            req.user = _context2.sent;
+
+            next();
+            _context2.next = 10;
+            break;
+
+          case 7:
+            _context2.prev = 7;
+            _context2.t0 = _context2['catch'](0);
+
+            (0, _utils.handleError)(_context2.t0, res);
+
+          case 10:
+          case 'end':
+            return _context2.stop();
+        }
+      }
+    }, _callee2, undefined, [[0, 7]]);
+  }));
+
+  return function userMiddlewareCI(_x4, _x5, _x6) {
+    return _ref2.apply(this, arguments);
   };
 }();

@@ -76,6 +76,30 @@ Object.keys(_attend).forEach(function (key) {
   });
 });
 
+var _categoryMenu = require('./category-menu');
+
+Object.keys(_categoryMenu).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _categoryMenu[key];
+    }
+  });
+});
+
+var _menu = require('./menu');
+
+Object.keys(_menu).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _menu[key];
+    }
+  });
+});
+
 var _general = require('./general');
 
 Object.keys(_general).forEach(function (key) {

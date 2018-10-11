@@ -112,7 +112,7 @@ Documentación de las peticiones http:
           savedUser: User
         }
 
-  ## SecurityProfile
+  ## Assist
   POST:
     /api/attend/enter/user/:id
       @send
@@ -129,4 +129,3 @@ Documentación de las peticiones http:
         {
           Assist
         }
-

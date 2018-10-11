@@ -30,9 +30,6 @@ app.use(function (req, res, next) {
 });
 // }
 
-app.get('/', function (req, res) {
-    res.send('Hola desde express!');
-});
 app.use('/api/auth', _routes.auth);
 app.use('/api/users', _routes.user);
 app.use('/api/clients', _routes.client);
