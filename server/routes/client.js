@@ -3,25 +3,25 @@ import { required, clientMiddleware } from '../middleware'
 import { client } from '../db-api'
 import { handleError } from '../utils'
 
-const app = express.Router();
+const app = express.Router()
 
 // GET /api/clients
 app.get('/', async (req, res) => {
-    try {
-        const clients = await client.findAll()
-        res.status(200).json(clients)
-    } catch (error) {
-        handleError(error, res)
-    }
+  try {
+    const clients = await client.findAll()
+    res.status(200).json(clients)
+  } catch (error) {
+    handleError(error, res)
+  }
 })
 
 // GET /api/clients/:id
 app.get('/:id', clientMiddleware, (req, res) => {
-    try {
-      res.status(200).json(req.client)
-    } catch (error) {
-      handleError(error, res)
-    }
+  try {
+    res.status(200).json(req.client)
+  } catch (error) {
+    handleError(error, res)
+  }
 })
 
 // POST /api/clients

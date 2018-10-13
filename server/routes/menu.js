@@ -41,4 +41,20 @@ app.post('/', pathCategoryMiddleware, imageMiddleware, async (req, res) => {
 
 })
 
+// POST /api/menu/:id/price
+// app.post('/:id/price', required, roleMiddleware, async (req, res) => {
+app.post('/:id/price', menuMiddleware, async (req, res) => {
+  const p = req.body
+  const m = req.menu
+  try {
+      const savedPrice = await menu.createPrice(m, p)
+      res.status(201).json({
+          message: 'Price saved',
+          savedPrice
+      })
+  } catch (error) {
+      handleError(error, res)
+  }
+})
+
 export default app

@@ -13,10 +13,9 @@ export default {
     debug(`Find user with id ${_id}`)
     return User
       .findOne({ _id })
-      .populate('role')
       .populate({
-        path: 'permits',
-        options: { sort: '-createdAt' }
+        path: 's_profile',
+        populate: { path: 'permits', options: { sort: 'action' } }
       })
   },
 
