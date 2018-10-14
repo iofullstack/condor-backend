@@ -1,5 +1,6 @@
 import Debug from 'debug'
 import { Client } from '../models'
+import { time } from '../config'
 
 const debug = new Debug('condor-cafe:db-api:client')
 
@@ -16,6 +17,7 @@ export default {
   },
 
   create: (c) => {
+    c.createdAt = time()
     debug(`Creating new client ${c}`)
     const client = new Client(c)
     return client.save()

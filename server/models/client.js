@@ -5,7 +5,7 @@ const ClientSchema = new Schema({
   nit_passport: { type: String, required: true, unique: true, index: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
-  createdAt: { type: Date, required: true, default: Date.now }
+  createdAt: { type: Date, required: true }
 })
 
 ClientSchema.plugin(uniqueValidator)

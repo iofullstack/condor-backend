@@ -1,5 +1,6 @@
 import Debug from 'debug'
 import { Menu, Price } from '../models'
+import { time } from '../config'
 
 const debug = new Debug('condor-cafe:db-api:menu')
 
@@ -27,6 +28,7 @@ export default {
   },
 
   createPrice: async (m, p) => {
+    p.createdAt = time()
     debug(`Creating new price ${p}`)
     const price = new Price(p)
     const savePrice = await price.save()

@@ -1,5 +1,6 @@
 import Debug from 'debug'
 import { Order } from '../models'
+import { time } from '../config'
 
 const debug = new Debug('condor-cafe:db-api:Order')
 
@@ -9,10 +10,12 @@ export default {
     return Order.find()
   },
 
-  findAllDay: (day, sort = 'createdAt') => {
+  findAllDay: (day) => {
     debug('Finding all Orders by Day')
-    const start = ISODate(`${day}T00:00:00Z`)
-    const end = ISODate(`${day}T23:59:59Z`)
+    // console.log(ISODate("2018-10-13T00:00:00Z"))
+    const start = `${day}T00:00:00Z`
+    const end = `${day}T23:59:59Z`
+    console.log(start, end)
     return Order.find({ 'createdAt': {'$gte': start, '$lte': end} })
                 .populate({ path: 'user'})
                 .populate({ path: 'tables' })
@@ -20,11 +23,9 @@ export default {
                   path: 'saucers',
                   populate: {
                     path: 'menu',
-                    populate: { path: 'category' },
                     populate: { path: 'prices' }
                   }
                 })
-                .sort(sort)
   },
 
   findById: (_id) => {
@@ -36,13 +37,13 @@ export default {
                   path: 'saucers',
                   populate: {
                     path: 'menu',
-                    populate: { path: 'category' },
                     populate: { path: 'prices' }
                   }
                 })
   },
 
   create: (o) => {
+    o.createdAt = time()
     debug(`Creating new order ${o}`)
     const order = new Order(o)
     return order.save()

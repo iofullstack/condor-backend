@@ -32,7 +32,7 @@ app.post('/', async (req, res) => {
         const savedSecurityProfile = await s_profile.create( {name, permits} )
         res.status(201).json({
             message: 'Security Profile saved',
-            savedSecurityProfile
+            response: savedSecurityProfile
         })
     } catch(error) {
         handleError(error, res)

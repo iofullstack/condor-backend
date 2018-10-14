@@ -1,6 +1,6 @@
 import express from 'express'
 import bodyParser from 'body-parser'
-import { auth, user, client, module, s_profile, attend, c_menu, menu, table, saucer, order } from './routes'
+import { auth, user, client, module, s_profile, attend, c_menu, menu, table, order } from './routes'
 
 const app = express()
 
@@ -25,7 +25,6 @@ app.use('/api/attend', attend)
 app.use('/api/c_menu', c_menu)
 app.use('/api/menu', menu)
 app.use('/api/tables', table)
-app.use('/api/saucers', saucer)
 app.use('/api/orders', order)
 
 export default app

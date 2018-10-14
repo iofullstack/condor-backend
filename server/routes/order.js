@@ -15,19 +15,19 @@ app.get('/', async (req, res) => {
   }
 })
 
-// GET /api/orders/day/:day
-app.get('/day/:day', orderDayMiddleware, async (req, res) => {
+// GET /api/orders/:id
+app.get('/:id', orderMiddleware, (req, res) => {
   try {
-    res.status(200).json(req.orders)
+    res.status(200).json(req.order)
   } catch (error) {
     handleError(error, res)
   }
 })
 
-// GET /api/orders/:id
-app.get('/:id', orderMiddleware, (req, res) => {
+// GET /api/orders/day/:day
+app.get('/day/:day', orderDayMiddleware, async (req, res) => {
   try {
-    res.status(200).json(req.order)
+    res.status(200).json(req.orders)
   } catch (error) {
     handleError(error, res)
   }
@@ -41,6 +41,7 @@ app.post('/', async (req, res) => {
 
   try {
     for(let s of o.saucers) {
+      console.log('joder: ', s)
       savedSaucer = await saucer.create(s)
       saucers.push(savedSaucer._id)
     }
@@ -48,7 +49,7 @@ app.post('/', async (req, res) => {
     const savedOrder = await order.create(o)
     res.status(201).json({
       message: 'Order saved',
-      savedOrder
+      response: savedOrder
     })
   } catch (error) {
     handleError(error, res)

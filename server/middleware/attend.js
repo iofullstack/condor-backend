@@ -1,5 +1,6 @@
 import { attend } from '../db-api'
 import { handleError } from '../utils'
+import { time } from '../config'
 
 export const attendMiddleware = async (req, res, next) => {
   try {
@@ -10,10 +11,19 @@ export const attendMiddleware = async (req, res, next) => {
   }
 }
 
+export const attendUserMiddleware = async (req, res, next) => {
+  try {
+    req.attends = await attend.findUserById(req.params.id)
+    next()
+  } catch (err) {
+    handleError(err, res)
+  }
+}
+
 export const existAttendMiddleware = async (req, res, next) => {
   try {
     if (req.user)
-      req.attend = await attend.findByDay(new Date().toISOString().slice(0,10) ,req.params.id)
+      req.attend = await attend.findByDay(time().toISOString().slice(0,10), req.params.id)
     next()
   } catch (err) {
     handleError(err, res)

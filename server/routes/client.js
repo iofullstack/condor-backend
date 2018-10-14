@@ -38,7 +38,7 @@ app.post('/', async (req, res) => {
     const savedClient = await client.create(c)
     res.status(201).json({
       message: 'Client saved',
-      savedClient
+      response: savedClient
     })
   } catch (error) {
     handleError(error, res)

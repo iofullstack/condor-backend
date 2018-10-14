@@ -33,7 +33,7 @@ app.post('/', pathCategoryMiddleware, imageMiddleware, async (req, res) => {
     const savedMenu = await menu.create(m)
     res.status(201).json({
       message: 'Menu saved',
-      savedMenu
+      response: savedMenu
     })
   } catch (error) {
     handleError(error, res)
@@ -50,7 +50,7 @@ app.post('/:id/price', menuMiddleware, async (req, res) => {
       const savedPrice = await menu.createPrice(m, p)
       res.status(201).json({
           message: 'Price saved',
-          savedPrice
+          response: savedPrice
       })
   } catch (error) {
       handleError(error, res)

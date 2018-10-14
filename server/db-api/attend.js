@@ -1,5 +1,6 @@
 import Debug from 'debug'
 import { Attend, Assist } from '../models'
+import { time } from '../config'
 
 const debug = new Debug('condor-cafe:db-api:attend')
 
@@ -9,7 +10,7 @@ export default {
       return Attend
           .findOne({ _id })
           .populate('user')
-          .populate('assist')
+          .populate('assists')
     },
 
     findAssistById: (_id) => {
@@ -26,7 +27,7 @@ export default {
               path: 'user',
               match: { _id }
           })
-          .populate('assist')
+          .populate('assists')
     },
 
     findUserById: (_id) => {
@@ -34,34 +35,38 @@ export default {
       return Attend
           .find({ user: _id })
           .populate('user')
-          .populate('assist')
+          .populate({
+            path: 'assists',
+            populate: { path: 'attend' }
+          })
     },
 
     createAttend: async (att) => {
+      att.day = time().toISOString().slice(0,10)
       debug(`Creating new attend ${att}`)
       const attend = new Attend(att)
       const ass = {
-        enter: new Date().toISOString().slice(11,16),
+        enter: time().toISOString().slice(11,16),
         leave: "",
         attend: attend._id
       }
       const assist = new Assist(ass)
       const saveAssist = await assist.save()
       console.log(saveAssist)
-      attend.assist.push(saveAssist)
+      attend.assists.push(saveAssist)
       return await attend.save()
     },
 
     createEnterAssist: async (attend) => {
       debug(`Creating new enter assist`)
       const ass = {
-        enter: new Date().toISOString().slice(11,16),
+        enter: time().toISOString().slice(11,16),
         leave: "",
         attend: attend._id
       }
       const assist = new Assist(ass)
       const saveAssist = await assist.save()
-      attend.assist.push(saveAssist)
+      attend.assists.push(saveAssist)
       await attend.save()
       return saveAssist
     },
@@ -71,7 +76,7 @@ export default {
       return await Assist.findOneAndUpdate({
         _id: assist._id
       }, {
-          $set: { leave: new Date().toISOString().slice(11,16) }
+          $set: { leave: time().toISOString().slice(11,16) }
         },function(err, newAssist) {
           if (err)
             return { error: true, msg: "An error ocurred: createLeaveAssist" }

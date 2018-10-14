@@ -32,7 +32,7 @@ app.post('/', async (req, res) => {
         const savedModule = await module.create( {name} )
         res.status(201).json({
             message: 'Module saved',
-            savedModule
+            response: savedModule
         })
     } catch(error) {
         handleError(error, res)
@@ -48,7 +48,7 @@ app.post('/:id/permits', moduleMiddleware, async (req, res) => {
         const savedPermit = await module.createPermit(m, p)
         res.status(201).json({
             message: 'Permit saved',
-            savedPermit
+            response: savedPermit
         })
     } catch (error) {
         handleError(error, res)

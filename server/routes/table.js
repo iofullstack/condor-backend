@@ -32,7 +32,7 @@ app.post('/', async (req, res) => {
     const savedTable = await table.create(t)
     res.status(201).json({
       message: 'Table saved',
-      savedTable
+      response: savedTable
     })
   } catch (error) {
     handleError(error, res)

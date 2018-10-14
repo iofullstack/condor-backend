@@ -8,7 +8,7 @@ const OrderSchema = new Schema({
   user: { type: ObjectId, ref: 'User', required: true },
   tables: [{ type: ObjectId, ref: 'Table', required: true }],
   saucers: [{ type: ObjectId, ref: 'Saucer', required: true }],
-  createdAt: { type: Date, required: true, default: Date.now }
+  createdAt: { type: Date, required: true }
 })
 
 export default mongoose.model('Order', OrderSchema)

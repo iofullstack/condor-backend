@@ -1,5 +1,6 @@
 import Debug from 'debug'
 import { Module, Permit } from '../models'
+import { time } from '../config'
 
 const debug = new Debug('condor-cafe:db-api:module')
 
@@ -16,6 +17,7 @@ export default {
   },
 
   create: (m) => {
+    m.createdAt = time()
     debug(`Creating new module ${m}`)
     const module = new Module(m)
     return module.save()
