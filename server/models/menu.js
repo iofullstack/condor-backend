@@ -4,7 +4,8 @@ import uniqueValidator from 'mongoose-unique-validator'
 const { ObjectId } = Schema.Types
 
 const MenuSchema = new Schema({
-  name: { type: String, required: true, unique: true, index: true },
+  code: { type: String, required: true, unique: true, index: true },
+  name: { type: String, required: true },
   src: { type: String, required: true },
   contain: [{ type: String, default: [] }],
   type: [{ type: String, default: [] }],

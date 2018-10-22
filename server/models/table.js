@@ -3,7 +3,8 @@ import uniqueValidator from 'mongoose-unique-validator'
 
 const TableSchema = new Schema({
   numTable: { type: String, required: true, unique: true, index: true },
-  capacity: { type: Number, required: true }
+  capacity: { type: Number, required: true },
+  occupied: { type: Number, required: false }
 })
 
 TableSchema.plugin(uniqueValidator)

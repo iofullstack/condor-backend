@@ -1,5 +1,5 @@
 import express from 'express'
-import { required, pathCategoryMiddleware, imageMiddleware, menuMiddleware } from '../middleware'
+import { required, pathMenuMiddleware, imageMiddleware, menuMiddleware } from '../middleware'
 import { menu } from '../db-api'
 import { handleError } from '../utils'
 
@@ -25,7 +25,7 @@ app.get('/:id', menuMiddleware, (req, res) => {
 })
 
 // POST /api/menu
-app.post('/', pathCategoryMiddleware, imageMiddleware, async (req, res) => {
+app.post('/', pathMenuMiddleware, imageMiddleware, async (req, res) => {
   const m = req.body
   m.src = req.imageInfo.fileName
 

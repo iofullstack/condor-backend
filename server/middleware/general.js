@@ -10,9 +10,9 @@ export const pathAvatarMiddleware = (req, res, next) => {
   }
 }
 
-export const pathCategoryMiddleware = (req, res, next) => {
+export const pathMenuMiddleware = (req, res, next) => {
   try {
-    req.img_path = './img/category/'
+    req.img_path = './img/menu/'
     next()
   } catch (err) {
     handleError(err, res)
