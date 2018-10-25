@@ -41,7 +41,6 @@ app.post('/', async (req, res) => {
 
   try {
     for(let s of o.saucers) {
-      console.log('joder: ', s)
       savedSaucer = await saucer.create(s)
       saucers.push(savedSaucer._id)
     }
