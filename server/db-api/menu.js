@@ -7,12 +7,12 @@ const debug = new Debug('condor-cafe:db-api:menu')
 export default {
   findAll: () => {
     debug('Finding all menu')
-    return Menu.find().populate('prices')
+    return Menu.find().populate('prices').populate({ path: 'category'})
   },
 
   findAllCategory: (_id) => {
     debug('Finding all menu of category')
-    return Menu.find({ category: _id }).populate('prices')
+    return Menu.find({ category: _id }).populate('prices').populate({ path: 'category'})
   },
 
   findById: (_id) => {
@@ -35,5 +35,11 @@ export default {
     m.prices.push(savePrice)
     await m.save()
     return savePrice
+  },
+
+  findByIdPrice: (_id) => {
+    debug(`Find price with id ${_id}`)
+    return Price
+      .findOne({ _id })
   }
 }

@@ -1,5 +1,5 @@
 import express from 'express'
-import { required, pathMenuMiddleware, imageMiddleware, menuMiddleware } from '../middleware'
+import { required, pathMenuMiddleware, imageMiddleware, menuMiddleware, menuCategoryMiddleware, priceMiddleware } from '../middleware'
 import { menu } from '../db-api'
 import { handleError } from '../utils'
 
@@ -13,6 +13,15 @@ app.get('/', async (req, res) => {
     } catch (error) {
         handleError(error, res)
     }
+})
+
+// GET /api/menu/category
+app.get('/category/:id', menuCategoryMiddleware, async (req, res) => {
+  try {
+    res.status(200).json(req.menu)
+  } catch (error) {
+      handleError(error, res)
+  }
 })
 
 // GET /api/menu/:id
@@ -54,6 +63,15 @@ app.post('/:id/price', menuMiddleware, async (req, res) => {
       })
   } catch (error) {
       handleError(error, res)
+  }
+})
+
+// GET /api/menu/price/:id
+app.get('/price/:id', priceMiddleware, (req, res) => {
+  try {
+    res.status(200).json(req.price)
+  } catch (error) {
+    handleError(error, res)
   }
 })
 

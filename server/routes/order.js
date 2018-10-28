@@ -2,6 +2,7 @@ import express from 'express'
 import { required, orderDayMiddleware, orderMiddleware } from '../middleware'
 import { order, saucer } from '../db-api'
 import { handleError } from '../utils'
+import { time } from '../config'
 
 const app = express.Router()
 
@@ -9,6 +10,17 @@ const app = express.Router()
 app.get('/', async (req, res) => {
   try {
     const orders = await order.findAll()
+    res.status(200).json(orders)
+  } catch (error) {
+    handleError(error, res)
+  }
+})
+
+// GET /api/orders
+app.get('/today', async (req, res) => {
+  try {
+    const day = time().toISOString().slice(0,10)
+    const orders = await order.findAllDay(day)
     res.status(200).json(orders)
   } catch (error) {
     handleError(error, res)
@@ -36,10 +48,11 @@ app.get('/day/:day', orderDayMiddleware, async (req, res) => {
 // POST /api/orders
 // app.post('/', required, async (req, res) => {
 app.post('/', async (req, res) => {
-  const o = req.body, saucers = []
+  const o = req.body, saucers = [], day = time().toISOString().slice(0,10)
   let savedSaucer
 
   try {
+    o.numOrder = (await order.countOrder(day)) + 1
     for(let s of o.saucers) {
       savedSaucer = await saucer.create(s)
       saucers.push(savedSaucer._id)

@@ -5,9 +5,16 @@ import { time } from '../config'
 const debug = new Debug('condor-cafe:db-api:Order')
 
 export default {
+  countOrder: async (day) => {
+    debug('countOrder')
+    const start = `${day}T00:00:00Z`
+    const end = `${day}T23:59:59Z`
+    return await Order.count({ 'createdAt': {'$gte': start, '$lte': end} })
+  },
+
   findAll: () => {
     debug('Find all Order')
-    return Order.find()
+    return Order.find().populate({ path: 'tables'})
   },
 
   findAllDay: (day) => {
@@ -16,16 +23,17 @@ export default {
     const start = `${day}T00:00:00Z`
     const end = `${day}T23:59:59Z`
     console.log(start, end)
-    return Order.find({ 'createdAt': {'$gte': start, '$lte': end} })
-                .populate({ path: 'user'})
-                .populate({ path: 'tables' })
-                .populate({
-                  path: 'saucers',
-                  populate: {
-                    path: 'menu',
-                    populate: { path: 'prices' }
-                  }
-                })
+    return Order.find({ 'createdAt': {'$gte': start, '$lte': end} }).populate({ path: 'tables'})
+    // return Order.find({ 'createdAt': {'$gte': start, '$lte': end} })
+    //             .populate({ path: 'user'})
+    //             .populate({ path: 'tables' })
+    //             .populate({
+    //               path: 'saucers',
+    //               populate: {
+    //                 path: 'menu',
+    //                 populate: { path: 'prices' }
+    //               }
+    //             })
   },
 
   findById: (_id) => {

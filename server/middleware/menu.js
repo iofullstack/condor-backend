@@ -9,3 +9,21 @@ export const menuMiddleware = async (req, res, next) => {
     handleError(err, res)
   }
 }
+
+export const menuCategoryMiddleware = async (req, res, next) => {
+  try {
+    req.menu = await menu.findAllCategory(req.params.id)
+    next()
+  } catch (err) {
+    handleError(err, res)
+  }
+}
+
+export const priceMiddleware = async (req, res, next) => {
+  try {
+    req.price = await menu.findByIdPrice(req.params.id)
+    next()
+  } catch (err) {
+    handleError(err, res)
+  }
+}
