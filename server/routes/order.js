@@ -1,6 +1,6 @@
 import express from 'express'
 import { required, orderDayMiddleware, orderMiddleware } from '../middleware'
-import { order, saucer } from '../db-api'
+import { order, saucer, table } from '../db-api'
 import { handleError } from '../utils'
 import { time } from '../config'
 
@@ -49,7 +49,8 @@ app.get('/day/:day', orderDayMiddleware, async (req, res) => {
 // app.post('/', required, async (req, res) => {
 app.post('/', async (req, res) => {
   const o = req.body, saucers = [], day = time().toISOString().slice(0,10)
-  let savedSaucer
+  const io = req.app.get('io')
+  let savedSaucer, people = o.numPeople
 
   try {
     o.numOrder = (await order.countOrder(day)) + 1
@@ -58,7 +59,17 @@ app.post('/', async (req, res) => {
       saucers.push(savedSaucer._id)
     }
     o.saucers = saucers
+    for(let t of o.tables) {
+      if (people > t.capacity) {
+        await table.updateOccupied(t._id, t.capacity)
+        people -= t.capacity
+      }
+      else
+        await table.updateOccupied(t._id, people)
+    }
+
     const savedOrder = await order.create(o)
+    io.emit('refreshTables')
     res.status(201).json({
       message: 'Order saved',
       response: savedOrder

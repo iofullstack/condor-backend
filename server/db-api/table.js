@@ -19,5 +19,10 @@ export default {
     debug(`Creating new Table ${t}`)
     const table = new Table(t)
     return table.save()
+  },
+
+  updateOccupied: (_id, occupied) => {
+    debug(`Updating Table occupied ${_id}`)
+    return Table.updateOne( { _id }, { $set: {occupied} } )
   }
 }

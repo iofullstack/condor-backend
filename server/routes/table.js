@@ -24,6 +24,19 @@ app.get('/:id', tableMiddleware, (req, res) => {
   }
 })
 
+// GET /api/tables/reset/:id
+app.get('/reset/:id', async (req, res) => {
+  try {
+    const io = req.app.get('io')
+    const id = req.params.id, people = 0
+    await table.updateOccupied(id, people)
+    io.emit('refreshTables')
+    res.status(200).json({ message: 'Table reset' })
+  } catch (error) {
+    handleError(error, res)
+  }
+})
+
 // POST /api/tables
 app.post('/', async (req, res) => {
   const t = req.body
