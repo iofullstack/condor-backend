@@ -7,18 +7,18 @@ const debug = new Debug('condor-cafe:db-api:menu')
 export default {
   findAll: () => {
     debug('Finding all menu')
-    return Menu.find().populate('prices').populate({ path: 'category'})
+    return Menu.find({ status: true }).populate('prices').populate({ path: 'category'})
   },
 
   findAllCategory: (_id) => {
     debug('Finding all menu of category')
-    return Menu.find({ category: _id }).populate('prices').populate({ path: 'category'})
+    return Menu.find({ category: _id, status: true }).populate('prices').populate({ path: 'category'})
   },
 
   findById: (_id) => {
     debug(`Find menu with id ${_id}`)
     return Menu
-      .findOne({ _id })
+      .findOne({ _id, status: true })
   },
 
   create: (m) => {

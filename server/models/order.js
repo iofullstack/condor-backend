@@ -9,7 +9,8 @@ const OrderSchema = new Schema({
   user: { type: ObjectId, ref: 'User', required: true },
   tables: [{ type: ObjectId, ref: 'Table', required: true }],
   saucers: [{ type: ObjectId, ref: 'Saucer', required: true }],
-  createdAt: { type: Date, required: true }
+  createdAt: { type: Date, required: true },
+  status: { type: Boolean, required: true, default: true }
 })
 
 export default mongoose.model('Order', OrderSchema)

@@ -10,6 +10,7 @@ const MenuSchema = new Schema({
   contain: [{ type: String, default: [] }],
   type: [{ type: String, default: [] }],
   category: { type: ObjectId, ref: 'CategoryMenu', required: true },
+  status: { type: Boolean, required: true, default: true },
   prices: [{ type: ObjectId, ref: 'Price', default: [] }]
 })
 
