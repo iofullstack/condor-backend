@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"db-condor.menus"},{"v":2,"unique":true,"key":{"code":1},"name":"code_1","ns":"db-condor.menus","background":true}],"uuid":"487fcdeab9f94295b6d660bb79092e75"}
