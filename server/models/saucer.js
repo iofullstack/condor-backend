@@ -6,7 +6,13 @@ const SaucerSchema = new Schema({
   quantity: { type: Number, required: true },
   contain: [{ type: String, default: [] }],
   type: { type: String, default: '' },
-  price: { type: ObjectId, ref: 'Price', required: true },
+  extra: [
+    {
+      name: { type: String, required: true },
+      price: { type: Number, required: true }
+    }
+  ],
+  price: { type: Number, required: true },
   menu: { type: ObjectId, ref: 'Menu', required: true }
 })
 

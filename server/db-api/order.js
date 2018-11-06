@@ -17,7 +17,7 @@ export default {
     return Order.find({ status: true }).populate({ path: 'tables'}).sort(sort)
   },
 
-  findAllDay: (day) => {
+  findAllDay: (day, sort = '-createdAt') => {
     debug('Finding all Orders by Day')
     const start = `${day}T00:00:00Z`
     const end = `${day}T23:59:59Z`
@@ -30,7 +30,7 @@ export default {
                     match: { status: true },
                     populate: { path: 'category' }
                   }
-                })
+                }).sort(sort)
     // return Order.find({ 'createdAt': {'$gte': start, '$lte': end} })
     //             .populate({ path: 'user'})
     //             .populate({ path: 'tables' })
