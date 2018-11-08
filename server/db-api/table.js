@@ -21,8 +21,11 @@ export default {
     return table.save()
   },
 
-  updateOccupied: (_id, occupied) => {
+  updateOccupied: async (_id, occupied) => {
     debug(`Updating Table occupied ${_id}`)
+    let table = await Table.findOne({ _id })
+    occupied += table.occupied
+    console.log(occupied)
     return Table.updateOne( { _id }, { $set: {occupied} } )
   }
 }
