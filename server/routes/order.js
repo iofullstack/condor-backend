@@ -75,7 +75,7 @@ app.post('/', async (req, res) => {
       response: savedOrder
     })
 
-    order.printCook(savedOrder)
+    order.printCook(await order.preparePrintCook(savedOrder))
   } catch (error) {
     handleError(error, res)
   }
