@@ -65,108 +65,94 @@ export default {
     return order.save()
   },
 
-  printCook: async (obj) => {
-    console.log(obj)
-    // const fecha = `${obj.createdAt.toISOString().slice(8,10)}/${obj.createdAt.toISOString().slice(5,7)}/${obj.createdAt.toISOString().slice(0,4)} ${obj.createdAt.toISOString().slice(11,19)}`
-    // const num = obj.numOrder
+  printCook: (obj) => {
+    printer.init({
+      type: 'epson',
+      interface: '/dev/usb/lp0'
+    })
 
-    // printer.init({
-    //   type: 'epson',
-    //   interface: '/dev/usb/lp0'
-    // })
+    printer.alignCenter()
+    printer.println('Condor Café')
+    printer.println('Sucursal: Central')
+  
+    printer.drawLine()
+  
+    printer.println('PEDIDO A COCINA')
+    printer.print(`Num: ${obj.num} `)
+    printer.print('Mesa(s): ')
+    for(let i = 0; i < obj.tables.length; i++) {
+      printer.print(`${obj.tables[i]} `)
+    }
+    printer.drawLine()
+    if(obj.carry)
+      printer.print('Pedido para LLEVAR')
+    printer.drawLine()
 
-    // printer.alignCenter()
-    // printer.println('Condor Café')
-    // printer.println('Sucursal: Central')
+    printer.newLine()
   
-    // printer.drawLine()
-  
-    // printer.println('PEDIDO A COCINA')
-    // printer.print(`Num: ${num} `)
-    // printer.print('Mesa(s): ')
-    // let vec = ['Uno','Dos']
-    // for(let i = 0; i < vec.length; i++) {
-    //   printer.print(`${vec[i]} `)
-    // }
-    // obj.tables.forEach(async el => {
-    //   let mesa = await Table.findOne({ _id: el })
-    //   printer.print(`${mesa.numTable} `)
-    // })
-    // printer.drawLine()
-    // if(obj.carry)
-    //   printer.print('Pedido para LLEVAR')
-    // printer.drawLine()
+    printer.alignLeft()
+    printer.tableCustom([
+      { text:'Cant', width: 0.1 },
+      { text:'Descripcion', width: 0.7 },
+      { text:'Total', width: 0.18 }
+    ])
+    for(let i = 0; i < obj.saucers.length; i++) {
+      printer.tableCustom([
+        { text: obj.saucers[i].quantity, width: 0.1 },
+        { text: obj.saucers[i].nameSaucer, width: 0.7 },
+        { text: obj.saucers[i].price, width: 0.18 }
+      ])
+    }
 
-    // printer.newLine()
+    printer.drawLine()
   
-    // printer.alignLeft()
-    // printer.tableCustom([
-    //   { text:'Cant', width: 0.1 },
-    //   { text:'Descripcion', width: 0.7 },
-    //   { text:'Total', width: 0.18 }
-    // ])
-    // obj.saucers.forEach(async el => {
-    //   let saucer = await Saucer.findOne({ _id: el })
-    //   let menu = await Menu.findOne({ _id: el.menu })
-    //   let nameSaucer = menu.name
-    //   saucer.extra.forEach(async ex => {
-    //     nameSaucer += ` +${ex.price} ${ex.name} `
-    //   })
-    //   printer.tableCustom([
-    //     { text: saucer.quantity, width: 0.1 },
-    //     { text: nameSaucer, width: 0.7 },
-    //     { text: saucer.price, width: 0.18 }
-    //   ])
-    // })
-
-    // printer.drawLine()
+    printer.println('USUARIO: Condor')
+    printer.println('FECHA: ' + obj.fecha)
+    printer.println('POR: iofullstack.com')
   
-    // printer.println('USUARIO: Condor')
-    // printer.println('FECHA: '+fecha)
-    // printer.println('POR: iofullstack.com')
+    printer.cut()
   
-    // printer.cut()
-  
-    // printer.execute(function(err){
-    //   if (err) {
-    //     console.error('Print failed', err)
-    //   } else {
-    //     console.log('Print done')
-    //   }
-    // })
+    printer.execute(function(err){
+      if (err) {
+        console.error('Print failed', err)
+      } else {
+        console.log('Print done')
+      }
+    })
   },
 
   preparePrintCook: async (obj) => {
     const fecha = `${obj.createdAt.toISOString().slice(8,10)}/${obj.createdAt.toISOString().slice(5,7)}/${obj.createdAt.toISOString().slice(0,4)} ${obj.createdAt.toISOString().slice(11,19)}`
     const num = obj.numOrder
     let mesas = []
+    let saucers = []
 
-    for(let i=0; i< obj.tables; i++) {
+    for(let i=0; i < obj.tables.length; i++) {
       let mesa = await Table.findOne({ _id: obj.tables[i] })
       console.log(mesa.numTable)
       mesas.push(mesa.numTable)
     }
 
-    // obj.saucers.forEach(async el => {
-    //   let saucer = await Saucer.findOne({ _id: el })
-    //   let menu = await Menu.findOne({ _id: el.menu })
-    //   let nameSaucer = menu.name
-    //   saucer.extra.forEach(async ex => {
-    //     nameSaucer += ` +${ex.price} ${ex.name} `
-    //   })
-    //   imprimir.saucers.push({
-    //     quantity: saucer.quantity,
-    //     nameSaucer: nameSaucer,
-    //     price: saucer.price
-    //   })
-    // })
+    for(let i=0; i < obj.saucers.length; i++) {
+      let saucer = await Saucer.findOne({ _id: obj.saucers[i] })
+      let menu = await Menu.findOne({ _id: saucer.menu })
+      let nameSaucer = menu.name
+      saucer.extra.forEach(ex => {
+        nameSaucer += ` +${ex.price} ${ex.name} `
+      })
+      saucers.push({
+        quantity: saucer.quantity,
+        nameSaucer: nameSaucer,
+        price: saucer.price
+      })
+    }
 
     return {
       fecha,
       num,
       carry: obj.carry,
       mesas,
-      saucers: []
+      saucers
     }
   }
 }
