@@ -2,8 +2,6 @@ import Debug from 'debug'
 import app from './app'
 import mongoose from 'mongoose'
 import { mongoUrl } from './config'
-// import express from 'express'
-// import path from 'path'
 import { createServer } from 'http'
 import socketIO from 'socket.io'
 
@@ -11,7 +9,8 @@ const PORT =  process.env.port || 3500,
       debug = Debug('condor-backend:root'),
       server = createServer(app),
       io = socketIO(server)
-      // publicDir = express.static( path.join(__dirname, '../../dist/proyect-app') )
+
+// console.log(path.join(__dirname, '../../angular-condor/dist/index.html'))
 
 app.set('io', io)
 

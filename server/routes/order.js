@@ -45,6 +45,21 @@ app.get('/day/:day', orderDayMiddleware, async (req, res) => {
   }
 })
 
+// GET /api/orders/day/:day/amount
+app.get('/day/:day/amount', orderDayMiddleware, async (req, res) => {
+  try {
+    let priceAll = 0;
+    req.orders.forEach((element) => {
+      element.saucers.forEach((el) => {
+        priceAll += el.price
+      })
+    })
+    res.status(200).json({ priceTotal: priceAll })
+  } catch (error) {
+    handleError(error, res)
+  }
+})
+
 // POST /api/orders
 // app.post('/', required, async (req, res) => {
 app.post('/', async (req, res) => {
