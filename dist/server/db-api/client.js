@@ -10,6 +10,8 @@ var _debug2 = _interopRequireDefault(_debug);
 
 var _models = require('../models');
 
+var _config = require('../config');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var debug = new _debug2.default('condor-cafe:db-api:client');
@@ -19,15 +21,16 @@ exports.default = {
     var sort = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '-createdAt';
 
     debug('Finding all clients');
-    return _models.Client.find().sort(sort);
+    return _models.Client.find({ status: true }).sort(sort);
   },
 
   findById: function findById(_id) {
     debug('Find client with id ' + _id);
-    return _models.Client.findOne({ _id: _id });
+    return _models.Client.findOne({ _id: _id, status: true });
   },
 
   create: function create(c) {
+    c.createdAt = (0, _config.time)();
     debug('Creating new client ' + c);
     var client = new _models.Client(c);
     return client.save();

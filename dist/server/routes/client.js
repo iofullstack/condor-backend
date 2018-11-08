@@ -92,7 +92,7 @@ app.post('/', function () {
 
             res.status(201).json({
               message: 'Client saved',
-              savedClient: savedClient
+              response: savedClient
             });
             _context2.next = 12;
             break;

@@ -87,7 +87,7 @@ app.post('/', function () {
 
                         res.status(201).json({
                             message: 'Security Profile saved',
-                            savedSecurityProfile: savedSecurityProfile
+                            response: savedSecurityProfile
                         });
                         _context2.next = 11;
                         break;

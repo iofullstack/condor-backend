@@ -86,7 +86,7 @@ app.post('/', function () {
 
                         res.status(201).json({
                             message: 'Module saved',
-                            savedModule: savedModule
+                            response: savedModule
                         });
                         _context2.next = 11;
                         break;
@@ -130,7 +130,7 @@ app.post('/:id/permits', _middleware.moduleMiddleware, function () {
 
                         res.status(201).json({
                             message: 'Permit saved',
-                            savedPermit: savedPermit
+                            response: savedPermit
                         });
                         _context3.next = 12;
                         break;

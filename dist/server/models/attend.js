@@ -18,9 +18,9 @@ var ObjectId = _mongoose.Schema.Types.ObjectId;
 
 
 var AttendSchema = new _mongoose.Schema({
-  day: { type: String, required: true, default: new Date().toISOString().slice(0, 10), unique: true, index: true },
+  day: { type: String, required: true, unique: true, index: true },
   note: { type: String, required: false },
-  assist: [{ type: ObjectId, ref: 'Assist', default: [] }],
+  assists: [{ type: ObjectId, ref: 'Assist', default: [] }],
   user: { type: ObjectId, ref: 'User', required: true }
 });
 

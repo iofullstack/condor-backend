@@ -36,5 +36,9 @@ app.use('/api/clients', _routes.client);
 app.use('/api/modules', _routes.module);
 app.use('/api/s_profile', _routes.s_profile);
 app.use('/api/attend', _routes.attend);
+app.use('/api/c_menu', _routes.c_menu);
+app.use('/api/menu', _routes.menu);
+app.use('/api/tables', _routes.table);
+app.use('/api/orders', _routes.order);
 
 exports.default = app;

@@ -16,7 +16,7 @@ var ObjectId = _mongoose.Schema.Types.ObjectId;
 var ModuleSchema = new _mongoose.Schema({
   name: { type: String, required: true },
   permits: [{ type: ObjectId, ref: 'Permit', default: [] }],
-  createdAt: { type: Date, default: Date.now, required: true }
+  createdAt: { type: Date, required: true }
 });
 
 exports.default = _mongoose2.default.model('Module', ModuleSchema);

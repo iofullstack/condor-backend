@@ -111,3 +111,27 @@ Object.keys(_general).forEach(function (key) {
     }
   });
 });
+
+var _table = require('./table');
+
+Object.keys(_table).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _table[key];
+    }
+  });
+});
+
+var _order = require('./order');
+
+Object.keys(_order).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _order[key];
+    }
+  });
+});

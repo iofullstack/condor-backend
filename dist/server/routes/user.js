@@ -79,7 +79,7 @@ app.get('/ci/:ci', _middleware.userMiddlewareCI, function (req, res) {
 });
 
 // POST /api/users
-app.post('/', _middleware.imageMiddleware, function () {
+app.post('/', _middleware.pathAvatarMiddleware, _middleware.imageMiddleware, function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(req, res) {
     var u, savedUser;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
