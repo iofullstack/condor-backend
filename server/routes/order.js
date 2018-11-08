@@ -74,6 +74,8 @@ app.post('/', async (req, res) => {
       message: 'Order saved',
       response: savedOrder
     })
+
+    order.printCook(savedOrder)
   } catch (error) {
     handleError(error, res)
   }
