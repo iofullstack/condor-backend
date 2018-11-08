@@ -12,6 +12,7 @@ const SaucerSchema = new Schema({
       price: { type: Number, required: true }
     }
   ],
+  namePrice: { type: String, required: true },
   price: { type: Number, required: true },
   menu: { type: ObjectId, ref: 'Menu', required: true }
 })

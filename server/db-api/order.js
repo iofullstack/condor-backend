@@ -135,9 +135,9 @@ export default {
     for(let i=0; i < obj.saucers.length; i++) {
       let saucer = await Saucer.findOne({ _id: obj.saucers[i] })
       let menu = await Menu.findOne({ _id: saucer.menu })
-      let nameSaucer = menu.name
+      let nameSaucer = `${menu.name} (${saucer.namePrice})`
       saucer.extra.forEach(ex => {
-        nameSaucer += ` +${ex.price} ${ex.name} `
+        nameSaucer += ` +${ex.price} ${ex.name}`
       })
       saucers.push({
         quantity: saucer.quantity,
