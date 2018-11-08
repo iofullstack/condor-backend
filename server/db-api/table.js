@@ -21,11 +21,12 @@ export default {
     return table.save()
   },
 
-  updateOccupied: async (_id, occupied) => {
+  updateOccupied: async (_id, occupied, reset = false) => {
     debug(`Updating Table occupied ${_id}`)
-    let table = await Table.findOne({ _id })
-    occupied += table.occupied
-    console.log(occupied)
+    if (!reset) {
+      let table = await Table.findOne({ _id })
+      occupied += table.occupied
+    }
     return Table.updateOne( { _id }, { $set: {occupied} } )
   }
 }

@@ -29,7 +29,7 @@ app.get('/reset/:id', async (req, res) => {
   try {
     const io = req.app.get('io')
     const id = req.params.id, people = 0
-    await table.updateOccupied(id, people)
+    await table.updateOccupied(id, people, true)
     io.emit('refreshTables')
     res.status(200).json({ message: 'Table reset' })
   } catch (error) {
