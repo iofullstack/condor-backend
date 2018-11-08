@@ -80,8 +80,8 @@ export default {
     printer.println('PEDIDO A COCINA')
     printer.print(`Num: ${obj.num} `)
     printer.print('Mesa(s): ')
-    for(let i = 0; i < obj.tables.length; i++) {
-      printer.print(`${obj.tables[i]} `)
+    for(let i = 0; i < obj.mesas.length; i++) {
+      printer.print(`${obj.mesas[i]} `)
     }
     printer.drawLine()
     if(obj.carry)
@@ -129,7 +129,6 @@ export default {
 
     for(let i=0; i < obj.tables.length; i++) {
       let mesa = await Table.findOne({ _id: obj.tables[i] })
-      console.log(mesa.numTable)
       mesas.push(mesa.numTable)
     }
 
