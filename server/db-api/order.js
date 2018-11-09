@@ -121,6 +121,10 @@ export default {
     })
   },
 
+  printExtract: (obj) => {
+    console.log(obj)
+  },
+
   preparePrintCook: async (obj) => {
     const fecha = `${obj.createdAt.toISOString().slice(8,10)}/${obj.createdAt.toISOString().slice(5,7)}/${obj.createdAt.toISOString().slice(0,4)} ${obj.createdAt.toISOString().slice(11,19)}`
     const num = obj.numOrder

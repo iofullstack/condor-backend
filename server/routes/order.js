@@ -96,4 +96,18 @@ app.post('/', async (req, res) => {
   }
 })
 
+// POST /api/orders/
+app.post('/extractCommand', async (req, res) => {
+  const extract = req.body
+  try {
+    console.log(extract)
+    order.printExtract(extract)
+    res.status(201).json({
+      message: 'Impimió Extracto'
+    })
+  } catch (error) {
+    handleError(error, res)
+  }
+})
+
 export default app
