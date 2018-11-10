@@ -122,7 +122,65 @@ export default {
   },
 
   printExtract: (obj) => {
+    const fecha = `${obj.fecha.toISOString().slice(8,10)}/${obj.fecha.toISOString().slice(5,7)}/${obj.fecha.toISOString().slice(0,4)} ${obj.fecha.toISOString().slice(11,19)}`
     console.log(obj)
+    printer.init({
+      type: 'epson',
+      interface: '/dev/usb/lp0'
+    })
+
+    printer.alignCenter()
+    printer.println('Condor Café')
+    printer.println('Sucursal: Central')
+
+    printer.drawLine()
+
+    printer.println('EXTRACTO DE CUENTA')
+    printer.print(`Num: ${obj.numOrder} `)
+    printer.print('Mesa(s): ')
+    for(let i = 0; i < obj.tables.length; i++) {
+      printer.print(`${obj.tables[i]} `)
+    }
+    printer.drawLine()
+    if(obj.carry)
+      printer.print('Pedido para LLEVAR')
+    printer.drawLine()
+
+    printer.newLine()
+
+    printer.alignLeft()
+    printer.tableCustom([
+      { text:'Cant', width: 0.1 },
+      { text:'Descripcion', width: 0.7 },
+      { text:'Precio', width: 0.18 }
+    ])
+    for(let i = 0; i < obj.saucers.length; i++) {
+      printer.tableCustom([
+        { text: obj.saucers[i].quantity, width: 0.1 },
+        { text: obj.saucers[i].nameSaucer, width: 0.7 },
+        { text: obj.saucers[i].price, width: 0.18 }
+      ])
+    }
+
+    printer.alignRight()
+    printer.print(`TOTAL: ${obj.total}`)
+    printer.alignLeft()
+
+    printer.drawLine()
+
+    printer.println('USUARIO: Condor')
+    printer.println('FECHA: ' + fecha)
+    printer.println('POR: iofullstack.com')
+
+    printer.cut()
+
+    printer.execute(function(err){
+      if (err) {
+        console.error('Print failed', err)
+      } else {
+        console.log('Print done')
+      }
+    })
   },
 
   preparePrintCook: async (obj) => {
