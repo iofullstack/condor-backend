@@ -53,14 +53,6 @@ var _mongoose2 = _interopRequireDefault(_mongoose);
 
 var _config = require('./config');
 
-var _express = require('express');
-
-var _express2 = _interopRequireDefault(_express);
-
-var _path = require('path');
-
-var _path2 = _interopRequireDefault(_path);
-
 var _http = require('http');
 
 var _socket = require('socket.io');
@@ -75,9 +67,8 @@ var PORT = process.env.port || 3500,
     debug = (0, _debug2.default)('condor-backend:root'),
     server = (0, _http.createServer)(_app2.default),
     io = (0, _socket2.default)(server);
-publicDir = _express2.default.static(_path2.default.join(__dirname, '../../angular-condor/dist/index.html'));
 
-console.log(publicDir);
+// console.log(path.join(__dirname, '../../angular-condor/dist/index.html'))
 
 _app2.default.set('io', io);
 

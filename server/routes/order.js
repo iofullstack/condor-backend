@@ -60,6 +60,19 @@ app.get('/day/:day/amount', orderDayMiddleware, async (req, res) => {
   }
 })
 
+// POST /api/orders/extract
+app.post('/extract', (req, res) => {
+  try {
+    const extract = req.body
+    order.printExtract(extract)
+    res.status(201).json({
+      message: 'Imprimió extracto'
+    })
+  } catch (error) {
+    handleError(error, res)
+  }
+})
+
 // POST /api/orders
 // app.post('/', required, async (req, res) => {
 app.post('/', async (req, res) => {
@@ -91,20 +104,6 @@ app.post('/', async (req, res) => {
     })
 
     order.printCook(await order.preparePrintCook(savedOrder))
-  } catch (error) {
-    handleError(error, res)
-  }
-})
-
-// POST /api/orders/
-app.post('/extractCommand', async (req, res) => {
-  const extract = req.body
-  try {
-    console.log(extract)
-    order.printExtract(extract)
-    res.status(201).json({
-      message: 'Impimió Extracto'
-    })
   } catch (error) {
     handleError(error, res)
   }
