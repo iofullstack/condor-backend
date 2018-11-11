@@ -83,9 +83,10 @@ export default {
     for(let i = 0; i < obj.mesas.length; i++) {
       printer.print(`${obj.mesas[i]} `)
     }
-    printer.drawLine()
+    printer.newLine()
     if(obj.carry)
       printer.print('Pedido para LLEVAR')
+    printer.newLine()
     printer.drawLine()
 
     printer.newLine()
@@ -93,14 +94,14 @@ export default {
     printer.alignLeft()
     printer.tableCustom([
       { text:'Cant', width: 0.1 },
-      { text:'Descripcion', width: 0.7 },
-      { text:'Total', width: 0.18 }
+      { text:'Descripcion', width: 0.76 },
+      { text:'Total', width: 0.12 }
     ])
     for(let i = 0; i < obj.saucers.length; i++) {
       printer.tableCustom([
         { text: obj.saucers[i].quantity, width: 0.1 },
-        { text: obj.saucers[i].nameSaucer, width: 0.7 },
-        { text: obj.saucers[i].price, width: 0.18 }
+        { text: obj.saucers[i].nameSaucer, width: 0.76 },
+        { text: obj.saucers[i].price, width: 0.12 }
       ])
     }
 
@@ -122,65 +123,133 @@ export default {
   },
 
   printExtract: (obj) => {
-    const fecha = `${obj.fecha.toISOString().slice(8,10)}/${obj.fecha.toISOString().slice(5,7)}/${obj.fecha.toISOString().slice(0,4)} ${obj.fecha.toISOString().slice(11,19)}`
-    console.log(fecha)
-    // printer.init({
-    //   type: 'epson',
-    //   interface: '/dev/usb/lp0'
-    // })
+    const fecha = `${obj.fecha.slice(8,10)}/${obj.fecha.slice(5,7)}/${obj.fecha.slice(0,4)} ${obj.fecha.slice(11,19)}`
 
-    // printer.alignCenter()
-    // printer.println('Condor Café')
-    // printer.println('Sucursal: Central')
+    printer.init({
+      type: 'epson',
+      interface: '/dev/usb/lp0'
+    })
 
-    // printer.drawLine()
+    printer.alignCenter()
+    printer.println('Condor Café')
+    printer.println('Sucursal: Central')
 
-    // printer.println('EXTRACTO DE CUENTA')
-    // printer.print(`Num: ${obj.numOrder} `)
-    // printer.print('Mesa(s): ')
-    // for(let i = 0; i < obj.tables.length; i++) {
-    //   printer.print(`${obj.tables[i]} `)
-    // }
-    // printer.drawLine()
-    // if(obj.carry)
-    //   printer.print('Pedido para LLEVAR')
-    // printer.drawLine()
+    printer.drawLine()
 
-    // printer.newLine()
+    printer.println('EXTRACTO DE CUENTA')
+    printer.print(`Num: ${obj.numOrder} `)
+    printer.print('Mesa(s): ')
+    for(let i = 0; i < obj.tables.length; i++) {
+      printer.print(`${obj.tables[i].numTable} `)
+    }
+    printer.newLine()
+    if(obj.carry)
+      printer.print('Pedido para LLEVAR')
+    printer.newLine()
+    printer.drawLine()
 
-    // printer.alignLeft()
-    // printer.tableCustom([
-    //   { text:'Cant', width: 0.1 },
-    //   { text:'Descripcion', width: 0.7 },
-    //   { text:'Precio', width: 0.18 }
-    // ])
-    // for(let i = 0; i < obj.saucers.length; i++) {
-    //   printer.tableCustom([
-    //     { text: obj.saucers[i].quantity, width: 0.1 },
-    //     { text: obj.saucers[i].nameSaucer, width: 0.7 },
-    //     { text: obj.saucers[i].price, width: 0.18 }
-    //   ])
-    // }
+    printer.newLine()
 
-    // printer.alignRight()
-    // printer.print(`TOTAL: ${obj.total}`)
-    // printer.alignLeft()
+    printer.alignLeft()
+    printer.tableCustom([
+      { text:'Cant', width: 0.1 },
+      { text:'Descripcion', width: 0.76 },
+      { text:'Prec', width: 0.12 }
+    ])
+    for(let i = 0; i < obj.saucers.length; i++) {
+      printer.tableCustom([
+        { text: obj.saucers[i].quantity, width: 0.1 },
+        { text: obj.saucers[i].nameSaucer, width: 0.76 },
+        { text: obj.saucers[i].price, width: 0.12 }
+      ])
+    }
 
-    // printer.drawLine()
+    printer.alignRight()
+    printer.newLine()
+    printer.print(`TOTAL: ${obj.total}`)
+    printer.newLine()
+    printer.alignLeft()
 
-    // printer.println('USUARIO: Condor')
-    // printer.println('FECHA: ' + fecha)
-    // printer.println('POR: iofullstack.com')
+    printer.drawLine()
 
-    // printer.cut()
+    printer.println('USUARIO: Condor')
+    printer.println('FECHA: ' + fecha)
+    printer.println('POR: iofullstack.com')
 
-    // printer.execute(function(err){
-    //   if (err) {
-    //     console.error('Print failed', err)
-    //   } else {
-    //     console.log('Print done')
-    //   }
-    // })
+    printer.cut()
+
+    printer.execute(function(err){
+      if (err) {
+        console.error('Print failed', err)
+      } else {
+        console.log('Print done')
+      }
+    })
+  },
+
+  printPago: (obj) => {
+    const fecha = `${obj.fecha.slice(8,10)}/${obj.fecha.slice(5,7)}/${obj.fecha.slice(0,4)} ${obj.fecha.slice(11,19)}`
+
+    printer.init({
+      type: 'epson',
+      interface: '/dev/usb/lp0'
+    })
+
+    printer.alignCenter()
+    printer.println('Condor Café')
+    printer.println('Sucursal: Central')
+
+    printer.drawLine()
+
+    printer.println('COMPROBANTE DE PAGO')
+    printer.print(`Num: ${obj.numOrder} `)
+    printer.print('Mesa(s): ')
+    for(let i = 0; i < obj.tables.length; i++) {
+      printer.print(`${obj.tables[i].numTable} `)
+    }
+    printer.newLine()
+    if(obj.carry)
+      printer.print('Pedido para LLEVAR')
+    printer.newLine()
+    printer.drawLine()
+
+    printer.newLine()
+
+    printer.alignLeft()
+    printer.tableCustom([
+      { text:'Cant', width: 0.1 },
+      { text:'Descripcion', width: 0.76 },
+      { text:'Prec', width: 0.12 }
+    ])
+    for(let i = 0; i < obj.saucers.length; i++) {
+      printer.tableCustom([
+        { text: obj.saucers[i].quantity, width: 0.1 },
+        { text: obj.saucers[i].nameSaucer, width: 0.76 },
+        { text: obj.saucers[i].price, width: 0.12 }
+      ])
+    }
+
+    printer.alignRight()
+    printer.newLine()
+    printer.print(`TOTAL: ${obj.total}`)
+    printer.newLine()
+    printer.alignLeft()
+
+    printer.drawLine()
+
+    printer.println('USUARIO: Condor')
+    printer.println('FECHA: ' + fecha)
+    printer.println('POR: iofullstack.com')
+
+    printer.cut()
+
+    printer.execute(function(err){
+      if (err) {
+        console.error('Print failed', err)
+      } else {
+        console.log('Print done')
+      }
+    })
   },
 
   preparePrintCook: async (obj) => {
@@ -196,6 +265,39 @@ export default {
 
     for(let i=0; i < obj.saucers.length; i++) {
       let saucer = await Saucer.findOne({ _id: obj.saucers[i] })
+      let menu = await Menu.findOne({ _id: saucer.menu })
+      let nameSaucer = `${menu.name} (${saucer.namePrice})`
+      saucer.extra.forEach(ex => {
+        nameSaucer += ` +${ex.price} ${ex.name}`
+      })
+      saucers.push({
+        quantity: saucer.quantity,
+        nameSaucer: nameSaucer,
+        price: saucer.price
+      })
+    }
+
+    return {
+      fecha,
+      num,
+      carry: obj.carry,
+      mesas,
+      saucers
+    }
+  },
+
+  preparePrintCook2: async (obj) => {
+    const fecha = `${obj.createdAt.slice(8,10)}/${obj.createdAt.slice(5,7)}/${obj.createdAt.slice(0,4)} ${obj.createdAt.slice(11,19)}`
+    const num = obj.numOrder
+    let mesas = []
+    let saucers = []
+
+    for(let i=0; i < obj.tables.length; i++) {
+      mesas.push(obj.tables[i].numTable)
+    }
+
+    for(let i=0; i < obj.saucers.length; i++) {
+      let saucer = obj.saucers[i]
       let menu = await Menu.findOne({ _id: saucer.menu })
       let nameSaucer = `${menu.name} (${saucer.namePrice})`
       saucer.extra.forEach(ex => {

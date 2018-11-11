@@ -73,6 +73,32 @@ app.post('/extract', (req, res) => {
   }
 })
 
+// POST /api/orders/print/pago
+app.post('/print/pago', (req, res) => {
+  try {
+    const pago = req.body
+    order.printPago(pago)
+    res.status(201).json({
+      message: 'Imprimió pago'
+    })
+  } catch (error) {
+    handleError(error, res)
+  }
+})
+
+// POST /api/orders/print/cook
+app.post('/print/cook', async (req, res) => {
+  try {
+    const obj = req.body
+    order.printCook(await order.preparePrintCook2(obj))
+    res.status(201).json({
+      message: 'Imprimió pedido para cocina'
+    })
+  } catch (error) {
+    handleError(error, res)
+  }
+})
+
 // POST /api/orders
 // app.post('/', required, async (req, res) => {
 app.post('/', async (req, res) => {
@@ -103,6 +129,7 @@ app.post('/', async (req, res) => {
       response: savedOrder
     })
 
+    console.log(savedOrder)
     order.printCook(await order.preparePrintCook(savedOrder))
   } catch (error) {
     handleError(error, res)

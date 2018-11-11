@@ -5,14 +5,14 @@ import { time } from '../config'
 const debug = new Debug('condor-cafe:db-api:menu')
 
 export default {
-  findAll: () => {
+  findAll: (sort = 'createdAt') => {
     debug('Finding all menu')
-    return Menu.find({ status: true }).populate('prices').populate({ path: 'category'})
+    return Menu.find({ status: true }).populate('prices').populate({ path: 'category'}).sort(sort)
   },
 
-  findAllCategory: (_id) => {
+  findAllCategory: (_id, sort = 'createdAt') => {
     debug('Finding all menu of category')
-    return Menu.find({ category: _id, status: true }).populate('prices').populate({ path: 'category'})
+    return Menu.find({ category: _id, status: true }).populate('prices').populate({ path: 'category'}).sort(sort)
   },
 
   findById: (_id) => {
@@ -22,6 +22,7 @@ export default {
   },
 
   create: (m) => {
+    m.createdAt = time()
     debug(`Creating new menu ${m}`)
     const menu = new Menu(m)
     return menu.save()

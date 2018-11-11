@@ -15,8 +15,9 @@ const MenuSchema = new Schema({
       price: { type: Number, required: true },
     }
   ],
-  category: { type: ObjectId, ref: 'CategoryMenu', required: true },
+  createdAt: { type: Date, required: true },
   status: { type: Boolean, required: true, default: true },
+  category: { type: ObjectId, ref: 'CategoryMenu', required: true },
   prices: [{ type: ObjectId, ref: 'Price', default: [] }]
 })
 
