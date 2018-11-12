@@ -21,7 +21,7 @@ export default {
     debug('Finding all Orders by Day')
     const start = `${day}T00:00:00Z`
     const end = `${day}T23:59:59Z`
-    return Order.find({ 'createdAt': {'$gte': start, '$lte': end}, status: true })
+    return Order.find({ 'createdAt': {'$gte': start, '$lte': end}, status: true, viewed: true })
                 .populate({ path: 'tables'})
                 .populate({
                   path: 'saucers',
@@ -41,6 +41,11 @@ export default {
     //                 populate: { path: 'prices' }
     //               }
     //             })
+  },
+
+  updateViewed: (_id) => {
+    debug(`Updating Order viewed ${_id}`)
+    return Order.updateOne( { _id }, { $set: {viewed: false} } )
   },
 
   findById: (_id) => {

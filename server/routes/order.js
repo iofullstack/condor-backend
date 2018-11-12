@@ -45,6 +45,17 @@ app.get('/day/:day', orderDayMiddleware, async (req, res) => {
   }
 })
 
+// GET /api/orders/:id/hide
+app.get('/:id/hide', async (req, res) => {
+  try {
+    const id = req.params.id
+    await order.updateViewed(id)
+    res.status(200).json({ message: 'Hide order' })
+  } catch (error) {
+    handleError(error, res)
+  }
+})
+
 // GET /api/orders/day/:day/amount
 app.get('/day/:day/amount', orderDayMiddleware, async (req, res) => {
   try {
