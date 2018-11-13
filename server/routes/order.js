@@ -49,8 +49,13 @@ app.get('/day/:day', orderDayMiddleware, async (req, res) => {
 app.get('/:id/hide', async (req, res) => {
   try {
     const id = req.params.id
-    await order.updateViewed(id)
-    res.status(200).json({ message: 'Hide order' })
+    const orderBox = await order.addBox(id)
+    if(orderBox.error)
+      res.status(200).json({ error: orderBox.error, message: orderBox.message })
+    else {
+      await order.updateViewed(id)
+      res.status(200).json({ error: false, message: 'Pedido guardado y almacenado en caja' })
+    }
   } catch (error) {
     handleError(error, res)
   }
@@ -140,7 +145,7 @@ app.post('/', async (req, res) => {
       response: savedOrder
     })
 
-    console.log(savedOrder)
+    // console.log(savedOrder)
     order.printCook(await order.preparePrintCook(savedOrder))
   } catch (error) {
     handleError(error, res)

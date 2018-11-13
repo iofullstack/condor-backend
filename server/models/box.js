@@ -5,11 +5,12 @@ const BoxSchema = new Schema({
   day: { type: String, required: true, unique: true, index: true },
   period: [
     {
+      amount: { type: Number, required: true },
       opening: { type: String, required: true },
-      closing: { type: String, required: false }
+      closing: { type: String, required: false },
+      accumulated: { type: Number, required: false, default: 0 }
     }
-  ],
-  amount: { type: Number, required: true }
+  ]
 })
 
 BoxSchema.plugin(uniqueValidator)

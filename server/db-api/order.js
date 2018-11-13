@@ -1,5 +1,5 @@
 import Debug from 'debug'
-import { Order, Table, Saucer, Menu } from '../models'
+import { Order, Table, Saucer, Menu, Box } from '../models'
 import { time } from '../config'
 import  printer from 'node-thermal-printer'
 const debug = new Debug('condor-cafe:db-api:Order')
@@ -46,6 +46,32 @@ export default {
   updateViewed: (_id) => {
     debug(`Updating Order viewed ${_id}`)
     return Order.updateOne( { _id }, { $set: {viewed: false} } )
+  },
+
+  addBox: async (_id) => {
+    debug(`Update accumulated box`)
+    const box = await Box.findOne({ day: time().toISOString().slice(0,10) })
+    if(!box)
+      return {
+        error: true,
+        message: 'Primero debe abrir caja'
+      }
+    const uBox = box.period[box.period.length - 1]
+    let total = 0
+    if(uBox.closing == '') {
+      const order = await Order.findOne({ _id }).populate({ path: 'saucers' })
+      order.saucers.forEach((element) => {
+        total += element.price
+      })
+      uBox.accumulated += total
+      return box.save()
+    } else {
+      return {
+        error: true,
+        message: 'Primero debe abrir caja'
+      }
+    }
+    // return box.save()
   },
 
   findById: (_id) => {
