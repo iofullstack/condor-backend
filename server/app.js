@@ -1,6 +1,7 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 import { auth, user, client, module, s_profile, attend, c_menu, menu, table, order, box } from './routes'
+import path from 'path'
 
 const app = express()
 
@@ -14,6 +15,12 @@ app.use(bodyParser.json())
         res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE, OPTIONS')
         next()
     })
+// }
+
+// if(process.env.NODE_ENV == 'production') {
+    const url = path.join(process.cwd(), '../angular-condor', 'dist', 'index.html')
+    console.log(url)
+    app.use(express.static(url))
 // }
 
 app.use('/api/auth', auth)

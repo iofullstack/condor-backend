@@ -5,7 +5,7 @@ import { mongoUrl } from './config'
 import { createServer } from 'http'
 import socketIO from 'socket.io'
 
-const PORT =  process.env.port || 3500,
+const PORT =  3500, //process.env.port || 
       debug = Debug('condor-backend:root'),
       server = createServer(app),
       io = socketIO(server)

@@ -8,8 +8,17 @@ const app = express.Router()
 // GET /api/boxs
 app.get('/', async (req, res) => {
   try {
-    const boxs = await box.findAll()
-    res.status(200).json(boxs)
+    const boxes = await box.findAll()
+    res.status(200).json(boxes)
+  } catch (error) {
+    handleError(error, res)
+  }
+})
+
+// GET /api/boxs/today
+app.get('/today', existBoxMiddleware, async (req, res) => {
+  try {
+    res.status(200).json(req.box)
   } catch (error) {
     handleError(error, res)
   }
