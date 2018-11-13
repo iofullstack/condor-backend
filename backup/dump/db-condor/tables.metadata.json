@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"db-condor.tables"},{"v":2,"unique":true,"key":{"numTable":1},"name":"numTable_1","ns":"db-condor.tables","background":true}],"uuid":"e85c905aceae49bd86bf329da80a5eb6"}
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"db-condor.tables"},{"v":2,"unique":true,"key":{"numTable":1},"name":"numTable_1","ns":"db-condor.tables","background":true}]}

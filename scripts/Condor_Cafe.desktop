@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Condor Cafe
+Comment=Open Condor Cafe
+Exec=/home/gary/Condor/abrirPagina.sh
+Icon=/home/gary/Proyectos/angular-condor/src/favicon.ico
+Terminal=false
+Type=Application
+Name[es_BO]=Condor_Cafe.desktop
