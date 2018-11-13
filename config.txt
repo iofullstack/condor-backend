@@ -1,0 +1,40 @@
+https://carlosazaustre.es/como-configurar-nginx-con-node-js-en-produccion/
+
+sudo nano /etc/nginx/sites-available/back.s-condor.com
+
+upstream back.s-condor.com {  
+  server 127.0.0.1:3000;
+}
+
+server {  
+  listen 0.0.0.0:80;
+  server_name back.s-condor.com;
+  access_log /var/log/nginx/back.s-condor.access.log;
+  error_log /var/log/nginx/back.s-condor.error.log debug;
+
+  location / {
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarder-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+    proxy_set_header X-NginX-Proxy true;
+
+    proxy_pass http://back.s-condor.com;
+    proxy_redirect off;
+  }
+}
+
+
+sudo ln -s /etc/nginx/sites-available/back.s-condor.com /etc/nginx/sites-enabled/back.s-condor.com
+
+sudo nano /etc/init/back.s-condor.com.conf
+
+description "back.s-condor.com"
+env APP_PATH="/home/gary/Proyectos/condor-backend"
+
+start on startup
+stop on shutdown
+
+script
+  cd $APP_PATH
+  exec pm2 start server.js
+end script
