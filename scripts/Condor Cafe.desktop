@@ -1,8 +1,8 @@
 [Desktop Entry]
-Name=Activar Epson
+Name="Condor Cafe"
 Comment=Open Condor Cafe
 Exec=/home/condor/Proyectos/condor-backend/scripts/activarEpson.sh
-Icon=/home/gary/Proyectos/angular-condor/src/favicon.ico
+Icon=/home/condor/Proyectos/angular-condor/dist/assets/img/plato2.png
 Terminal=true
 Type=Application
-Name[en_US]=Activar Epson.desktop
+Name[en_US]=Condor_Cafe.desktop
