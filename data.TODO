@@ -282,6 +282,41 @@ POST:
     "capacity" : 4,
     "occupied" : 0
   }
+  {
+    "numTable" : "b-01",
+    "capacity" : 1,
+    "occupied" : 0
+  }
+  {
+    "numTable" : "b-02",
+    "capacity" : 1,
+    "occupied" : 0
+  }
+  {
+    "numTable" : "b-03",
+    "capacity" : 1,
+    "occupied" : 0
+  }
+  {
+    "numTable" : "b-04",
+    "capacity" : 1,
+    "occupied" : 0
+  }
+  {
+    "numTable" : "b-05",
+    "capacity" : 1,
+    "occupied" : 0
+  }
+  {
+    "numTable" : "b-06",
+    "capacity" : 1,
+    "occupied" : 0
+  }
+  {
+    "numTable" : "b-07",
+    "capacity" : 1,
+    "occupied" : 0
+  }
 
   http://localhost:3500/api/c_menu
   {

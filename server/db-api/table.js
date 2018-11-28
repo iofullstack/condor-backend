@@ -1,12 +1,13 @@
 import Debug from 'debug'
 import { Table } from '../models'
+import { time } from '../config'
 
 const debug = new Debug('condor-cafe:db-api:Table')
 
 export default {
-  findAll: () => {
+  findAll: (sort = 'createdAt') => {
     debug('Finding all Tables')
-    return Table.find()
+    return Table.find().sort(sort)
   },
 
   findById: (_id) => {
@@ -16,6 +17,7 @@ export default {
   },
 
   create: (t) => {
+    t.createdAt = time()
     debug(`Creating new Table ${t}`)
     const table = new Table(t)
     return table.save()

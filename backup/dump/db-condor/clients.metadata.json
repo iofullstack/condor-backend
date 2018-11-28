@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"db-condor.clients"},{"v":2,"unique":true,"key":{"nit_passport":1},"name":"nit_passport_1","ns":"db-condor.clients","background":true}],"uuid":"6eef6bfc82ec4639999de6fc1f487a63"}
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"db-condor.clients"},{"v":2,"unique":true,"key":{"nit_passport":1},"name":"nit_passport_1","ns":"db-condor.clients","background":true}],"uuid":"7f1a8177c69649d4a60e622da011930f"}

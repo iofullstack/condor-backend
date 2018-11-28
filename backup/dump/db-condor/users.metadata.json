@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"db-condor.users"},{"v":2,"unique":true,"key":{"email":1},"name":"email_1","ns":"db-condor.users","background":true}],"uuid":"60bc4b58738145aa91aea2ea2714f430"}
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"db-condor.users"},{"v":2,"unique":true,"key":{"email":1},"name":"email_1","background":true,"ns":"db-condor.users"}],"uuid":"6e307d330e104ac8b8479c0a3dee70ad"}
