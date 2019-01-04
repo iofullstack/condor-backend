@@ -18,3 +18,12 @@ export const orderMiddleware = async (req, res, next) => {
     handleError(error, res)
   }
 }
+
+export const orderDayArchivedMiddleware = async (req, res, next) => {
+  try {
+    req.orders = await order.findAllDay(req.params.day, 'createdAt', false)
+    next()
+  } catch (error) {
+    handleError(error, res)
+  }
+}

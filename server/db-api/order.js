@@ -17,11 +17,11 @@ export default {
     return Order.find({ status: true }).populate({ path: 'tables'}).sort(sort)
   },
 
-  findAllDay: (day, sort = '-createdAt') => {
+  findAllDay: (day, sort = '-createdAt', viewed = true) => {
     debug('Finding all Orders by Day')
     const start = `${day}T00:00:00Z`
     const end = `${day}T23:59:59Z`
-    return Order.find({ 'createdAt': {'$gte': start, '$lte': end}, status: true, viewed: true })
+    return Order.find({ 'createdAt': {'$gte': start, '$lte': end}, status: true, viewed })
                 .populate({ path: 'tables'})
                 .populate({
                   path: 'saucers',
@@ -61,8 +61,10 @@ export default {
     if(uBox.closing == '') {
       const order = await Order.findOne({ _id }).populate({ path: 'saucers' })
       order.saucers.forEach((element) => {
+        console.log(element.price)
         total += element.price
       })
+      console.log(total)
       uBox.accumulated += total
       return box.save()
     } else {

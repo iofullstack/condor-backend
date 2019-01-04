@@ -1,5 +1,5 @@
 import express from 'express'
-import { required, orderDayMiddleware, orderMiddleware } from '../middleware'
+import { required, orderDayMiddleware, orderMiddleware, orderDayArchivedMiddleware } from '../middleware'
 import { order, saucer, table } from '../db-api'
 import { handleError } from '../utils'
 import { time } from '../config'
@@ -37,9 +37,41 @@ app.get('/:id', orderMiddleware, (req, res) => {
 })
 
 // GET /api/orders/day/:day
-app.get('/day/:day', orderDayMiddleware, async (req, res) => {
+app.get('/day/:day', orderDayArchivedMiddleware, async (req, res) => {
   try {
-    res.status(200).json(req.orders)
+    let sales = [], extras = [], totalSales = 0, totalExtras = 0
+    req.orders.forEach((element) => {
+      element.saucers.forEach((el) => {
+        let priceExtra = 0, match = false
+        el.extra.forEach((ex) => {
+          priceExtra += ex.price * el.quantity
+          extras.push({
+            _id : ex._id,
+            name: ex.name,
+            price: ex.price,
+            quantity: el.quantity
+          })
+          totalExtras += ex.price * el.quantity
+        })
+        totalSales += el.price - priceExtra
+        for(let i = 0; i < sales.length; i++) {
+          if(sales[i]._id === el.menu._id) {
+            match = true
+            sales[i].price += el.price - priceExtra
+            sales[i].quantity += el.quantity
+          }
+        }
+        if(!match) {
+          sales.push({
+            _id: el.menu._id,
+            name: el.menu.name,
+            price: el.price - priceExtra,
+            quantity: el.quantity
+          })
+        }
+      })
+    })
+    res.status(200).json({sales, extras, totalExtras, totalSales})
   } catch (error) {
     handleError(error, res)
   }
@@ -67,6 +99,7 @@ app.get('/day/:day/amount', orderDayMiddleware, async (req, res) => {
     let priceAll = 0;
     req.orders.forEach((element) => {
       element.saucers.forEach((el) => {
+        console.log(el.price)
         priceAll += el.price
       })
     })
