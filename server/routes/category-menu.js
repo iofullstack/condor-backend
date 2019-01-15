@@ -27,7 +27,10 @@ app.get('/:id', c_menuMiddleware, (req, res) => {
 // POST /api/c_menu
 // app.post('/', required, async (req, res) => {
 app.post('/', async (req, res) => {
-    const { name, color } = req.body
+    const { name } = req.body
+    const cm = await c_menu.findLast()
+    let number = parseInt(cm.color.split('-')[1]) + 1
+    const color = 'color-'+number
     try {
         const savedCategoryMenu = await c_menu.create( { name, color } )
         res.status(201).json({

@@ -1,12 +1,18 @@
 import Debug from 'debug'
 import { CategoryMenu } from '../models'
+import { time } from '../config'
 
 const debug = new Debug('condor-cafe:db-api:category-menu')
 
 export default {
-  findAll: () => {
+  findAll: (sort='createdAt') => {
     debug('Finding all category-menu')
-    return CategoryMenu.find()
+    return CategoryMenu.find().sort(sort)
+  },
+
+  findLast: () => {
+    debug('Finding last category-menu')
+    return CategoryMenu.findOne().sort('-createdAt').limit(1)
   },
 
   findById: (_id) => {
@@ -16,6 +22,7 @@ export default {
   },
 
   create: (cm) => {
+    cm.createdAt = time()
     debug(`Creating new category-menu ${cm}`)
     const c_menu = new CategoryMenu(cm)
     return c_menu.save()

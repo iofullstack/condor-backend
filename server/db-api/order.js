@@ -17,12 +17,40 @@ export default {
     return Order.find({ status: true }).populate({ path: 'tables'}).sort(sort)
   },
 
-  findAllDay: (day, sort = '-createdAt', viewed = true) => {
+  findAllDay: (day, sort = '-createdAt', viewed = true, carry = false) => {
     debug('Finding all Orders by Day')
     const start = `${day}T00:00:00Z`
     const end = `${day}T23:59:59Z`
-    return Order.find({ 'createdAt': {'$gte': start, '$lte': end}, status: true, viewed })
-                .populate({ path: 'tables'})
+    if(carry)
+      return Order.find({ 'createdAt': {'$gte': start, '$lte': end}, status: true, viewed, carry })
+                  .populate({ path: 'tables' })
+                  .populate({
+                    path: 'saucers',
+                    populate: {
+                      path: 'menu',
+                      match: { status: true },
+                      populate: { path: 'category' }
+                    }
+                  }).sort(sort)
+    else
+      return Order.find({ 'createdAt': {'$gte': start, '$lte': end}, status: true, viewed })
+                  .populate({ path: 'tables' })
+                  .populate({
+                    path: 'saucers',
+                    populate: {
+                      path: 'menu',
+                      match: { status: true },
+                      populate: { path: 'category' }
+                    }
+                  }).sort(sort)
+  },
+
+  findAllDayTable: (day, idTable, sort = '-createdAt', viewed = true) => {
+    debug('Finding all Orders by Day')
+    const start = `${day}T00:00:00Z`
+    const end = `${day}T23:59:59Z`
+    return Order.find({ 'createdAt': {'$gte': start, '$lte': end}, status: true, viewed, tables: {$in: [idTable] }, carry: false })
+                .populate({ path: 'tables' })
                 .populate({
                   path: 'saucers',
                   populate: {
@@ -31,16 +59,6 @@ export default {
                     populate: { path: 'category' }
                   }
                 }).sort(sort)
-    // return Order.find({ 'createdAt': {'$gte': start, '$lte': end} })
-    //             .populate({ path: 'user'})
-    //             .populate({ path: 'tables' })
-    //             .populate({
-    //               path: 'saucers',
-    //               populate: {
-    //                 path: 'menu',
-    //                 populate: { path: 'prices' }
-    //               }
-    //             })
   },
 
   updateViewed: (_id) => {

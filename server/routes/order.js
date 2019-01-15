@@ -16,11 +16,22 @@ app.get('/', async (req, res) => {
   }
 })
 
-// GET /api/orders
+// GET /api/orders/today
 app.get('/today', async (req, res) => {
   try {
     const day = time().toISOString().slice(0,10)
-    const orders = await order.findAllDay(day)
+    const orders = await order.findAllDay(day, '-createdAt', true, true)
+    res.status(200).json(orders)
+  } catch (error) {
+    handleError(error, res)
+  }
+})
+
+// GET /api/orders/today/table/:id
+app.get('/today/table/:id', async (req, res) => {
+  try {
+    const day = time().toISOString().slice(0,10)
+    const orders = await order.findAllDayTable(day, req.params.id)
     res.status(200).json(orders)
   } catch (error) {
     handleError(error, res)

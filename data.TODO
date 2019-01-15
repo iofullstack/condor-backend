@@ -347,6 +347,18 @@ POST:
     "name" : "Cervezas",
     "color" : "color-7"
   }
+  {
+    "name" : "Postres",
+    "color" : "color-8"
+  }
+  {
+    "name" : "Bebidas y jugos de fruta",
+    "color" : "color-9"
+  }
+  {
+    "name" : "Happy Hour 2 Drinks",
+    "color" : "color-10"
+  }
 
   http://localhost:3500/api/menu
   {
