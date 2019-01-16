@@ -5,6 +5,11 @@ import { time } from '../config'
 const debug = new Debug('condor-cafe:db-api:menu')
 
 export default {
+  findAllNonePrice: (sort = 'createdAt') => {
+    debug('Finding all menu price none')
+    return Menu.find({ status: true, prices: { $size: 0 } }).sort(sort)
+  },
+
   findAll: (sort = 'createdAt') => {
     debug('Finding all menu')
     return Menu.find({ status: true }).populate('prices').populate({ path: 'category'}).sort(sort)

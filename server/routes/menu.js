@@ -15,6 +15,16 @@ app.get('/', async (req, res) => {
     }
 })
 
+// GET /api/menu/price/none
+app.get('/price/none', async (req, res) => {
+  try {
+      const menus = await menu.findAllNonePrice()
+      res.status(200).json(menus)
+  } catch (error) {
+      handleError(error, res)
+  }
+})
+
 // GET /api/menu/category
 app.get('/category/:id', menuCategoryMiddleware, async (req, res) => {
   try {
