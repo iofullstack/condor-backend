@@ -47,5 +47,13 @@ export default {
     debug(`Find price with id ${_id}`)
     return Price
       .findOne({ _id })
+  },
+
+  removeListPriceOfMenu: async (idM, idP) => {
+    debug(`Remove list price of Menu AND Delete price with idP`)
+    console.log('Enter 1')
+    await Menu.updateOne( { _id: idM }, { $pull: { prices: idP } } )
+    console.log('Enter 2')
+    return Price.findOneAndRemove({ idP })
   }
 }

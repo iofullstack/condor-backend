@@ -33,10 +33,7 @@ app.post('/', async (req, res) => {
     const color = 'color-'+number
     try {
         const savedCategoryMenu = await c_menu.create( { name, color } )
-        res.status(201).json({
-            message: 'Category Menu saved',
-            response: savedCategoryMenu
-        })
+        res.status(201).json(savedCategoryMenu)
     } catch(error) {
         handleError(error, res)
     }

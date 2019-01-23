@@ -27,3 +27,12 @@ export const priceMiddleware = async (req, res, next) => {
     handleError(err, res)
   }
 }
+
+export const priceRemoveOfMenuMiddleware = async (req, res, next) => {
+  try {
+    req.deletePrice = await menu.removeListPriceOfMenu(req.params.idM, req.params.idP)
+    next()
+  } catch (err) {
+    handleError(err, res)
+  }
+}

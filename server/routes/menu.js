@@ -1,5 +1,5 @@
 import express from 'express'
-import { required, pathMenuMiddleware, imageMiddleware, menuMiddleware, menuCategoryMiddleware, priceMiddleware } from '../middleware'
+import { required, pathMenuMiddleware, imageMiddleware, menuMiddleware, menuCategoryMiddleware, priceMiddleware, priceRemoveOfMenuMiddleware } from '../middleware'
 import { menu } from '../db-api'
 import { handleError } from '../utils'
 
@@ -19,6 +19,7 @@ app.get('/', async (req, res) => {
 app.get('/price/none', async (req, res) => {
   try {
       const menus = await menu.findAllNonePrice()
+      // console.log(menus)
       res.status(200).json(menus)
   } catch (error) {
       handleError(error, res)
@@ -65,12 +66,10 @@ app.post('/', pathMenuMiddleware, imageMiddleware, async (req, res) => {
 app.post('/:id/price', menuMiddleware, async (req, res) => {
   const p = req.body
   const m = req.menu
+  // console.log(p)
   try {
       const savedPrice = await menu.createPrice(m, p)
-      res.status(201).json({
-          message: 'Price saved',
-          response: savedPrice
-      })
+      res.status(201).json(savedPrice)
   } catch (error) {
       handleError(error, res)
   }
@@ -81,6 +80,20 @@ app.get('/price/:id', priceMiddleware, (req, res) => {
   try {
     res.status(200).json(req.price)
   } catch (error) {
+    handleError(error, res)
+  }
+})
+
+// GET /api/menu/:idM/price/:idP
+app.delete('/:idM/price/:idP', priceRemoveOfMenuMiddleware, (req, res) => {
+  try {
+    console.log(req.deletePrice)
+    res.status(200).json({
+      message: 'Precio eliminado',
+      response: req.deletePrice
+    })
+  } catch (error) {
+    console.log(error)
     handleError(error, res)
   }
 })

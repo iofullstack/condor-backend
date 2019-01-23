@@ -387,3 +387,25 @@ POST:
       }
     ]
   }
+
+
+
+
+
+
+
+
+
+
+
+
+//UPDATE
+db.categorymenus.update({
+  _id: ObjectId('5bfa0e0df44d7ee1d04853c7')
+}, {
+  $set: {
+    createdAt: '2019-01-08T20:30:18.481Z'
+  }
+})
+
+db.categorymenus.remove({_id: ObjectId('5c38ce2b676d39645ce42aeb')},true)
