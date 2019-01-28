@@ -18,7 +18,8 @@ const MenuSchema = new Schema({
   createdAt: { type: Date, required: true },
   status: { type: Boolean, required: true, default: true },
   category: { type: ObjectId, ref: 'CategoryMenu', required: true },
-  prices: [{ type: ObjectId, ref: 'Price', default: [] }]
+  prices: [{ type: ObjectId, ref: 'Price', default: [] }],
+  discounts: [{ type: ObjectId, ref: 'Discount', default: [] }]
 })
 
 MenuSchema.plugin(uniqueValidator)

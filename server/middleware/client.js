@@ -9,3 +9,12 @@ export const clientMiddleware = async (req, res, next) => {
     handleError(err, res)
   }
 }
+
+export const clientCIMiddleware = async (req, res, next) => {
+  try {
+    req.client = await client.findByCI(req.params.ci)
+    next()
+  } catch (err) {
+    handleError(err, res)
+  }
+}

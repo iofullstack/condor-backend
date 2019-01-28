@@ -1,5 +1,5 @@
 import express from 'express'
-import { required, clientMiddleware } from '../middleware'
+import { required, clientMiddleware, clientCIMiddleware } from '../middleware'
 import { client } from '../db-api'
 import { handleError } from '../utils'
 
@@ -17,6 +17,15 @@ app.get('/', async (req, res) => {
 
 // GET /api/clients/:id
 app.get('/:id', clientMiddleware, (req, res) => {
+  try {
+    res.status(200).json(req.client)
+  } catch (error) {
+    handleError(error, res)
+  }
+})
+
+// GET /api/clients/ci/:ci
+app.get('/ci/:ci', clientCIMiddleware, (req, res) => {
   try {
     res.status(200).json(req.client)
   } catch (error) {

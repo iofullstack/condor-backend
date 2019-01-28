@@ -16,6 +16,12 @@ export default {
       .findOne({ _id, status: true })
   },
 
+  findByCI: (ci) => {
+    debug(`Find client with CI ${ci}`)
+    return Client
+      .findOne({ nit_passport: ci , status: true })
+  },
+
   create: (c) => {
     c.createdAt = time()
     debug(`Creating new client ${c}`)

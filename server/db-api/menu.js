@@ -1,5 +1,5 @@
 import Debug from 'debug'
-import { Menu, Price } from '../models'
+import { Menu, Price, Discount } from '../models'
 import { time } from '../config'
 
 const debug = new Debug('condor-cafe:db-api:menu')
@@ -12,7 +12,7 @@ export default {
 
   findAll: (sort = 'createdAt') => {
     debug('Finding all menu')
-    return Menu.find({ status: true }).populate('prices').populate({ path: 'category'}).sort(sort)
+    return Menu.find({ status: true }).populate('prices').populate('discounts').populate({ path: 'category'}).sort(sort)
   },
 
   findAllCategory: (_id, sort = 'createdAt') => {
@@ -51,9 +51,23 @@ export default {
 
   removeListPriceOfMenu: async (idM, idP) => {
     debug(`Remove list price of Menu AND Delete price with idP`)
-    console.log('Enter 1')
     await Menu.updateOne( { _id: idM }, { $pull: { prices: idP } } )
-    console.log('Enter 2')
     return Price.findOneAndRemove({ idP })
+  },
+
+  removeListDiscountOfMenu: async (idM, idD) => {
+    debug(`Remove list discount of Menu AND Delete discount with idD`)
+    await Menu.updateOne( { _id: idM }, { $pull: { discounts: idD } } )
+    return Discount.findOneAndRemove({ idD })
+  },
+
+  createDiscount: async (m, d) => {
+    d.createdAt = time()
+    debug(`Creating new discount ${d}`)
+    const discount = new Discount(d)
+    const saveDiscount = await discount.save()
+    m.discounts.push(saveDiscount)
+    await m.save()
+    return saveDiscount
   }
 }

@@ -1,5 +1,5 @@
 import express from 'express'
-import { required, pathMenuMiddleware, imageMiddleware, menuMiddleware, menuCategoryMiddleware, priceMiddleware, priceRemoveOfMenuMiddleware } from '../middleware'
+import { required, pathMenuMiddleware, imageMiddleware, menuMiddleware, menuCategoryMiddleware, priceMiddleware, priceRemoveOfMenuMiddleware, discountRemoveOfMenuMiddleware } from '../middleware'
 import { menu } from '../db-api'
 import { handleError } from '../utils'
 
@@ -75,6 +75,19 @@ app.post('/:id/price', menuMiddleware, async (req, res) => {
   }
 })
 
+// POST /api/menu/:id/discount
+app.post('/:id/discount', menuMiddleware, async (req, res) => {
+  const d = req.body
+  const m = req.menu
+  // console.log(p)
+  try {
+      const savedDiscount = await menu.createDiscount(m, d)
+      res.status(201).json(savedDiscount)
+  } catch (error) {
+      handleError(error, res)
+  }
+})
+
 // GET /api/menu/price/:id
 app.get('/price/:id', priceMiddleware, (req, res) => {
   try {
@@ -91,6 +104,20 @@ app.delete('/:idM/price/:idP', priceRemoveOfMenuMiddleware, (req, res) => {
     res.status(200).json({
       message: 'Precio eliminado',
       response: req.deletePrice
+    })
+  } catch (error) {
+    console.log(error)
+    handleError(error, res)
+  }
+})
+
+// GET /api/menu/:idM/discount/:idD
+app.delete('/:idM/discount/:idD', discountRemoveOfMenuMiddleware, (req, res) => {
+  try {
+    console.log(req.deleteDiscount)
+    res.status(200).json({
+      message: 'Descuento eliminado',
+      response: req.deleteDiscount
     })
   } catch (error) {
     console.log(error)

@@ -36,3 +36,12 @@ export const priceRemoveOfMenuMiddleware = async (req, res, next) => {
     handleError(err, res)
   }
 }
+
+export const discountRemoveOfMenuMiddleware = async (req, res, next) => {
+  try {
+    req.deleteDiscount = await menu.removeListDiscountOfMenu(req.params.idM, req.params.idP)
+    next()
+  } catch (err) {
+    handleError(err, res)
+  }
+}
