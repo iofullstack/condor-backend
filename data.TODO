@@ -409,3 +409,17 @@ db.categorymenus.update({
 })
 
 db.categorymenus.remove({_id: ObjectId('5c38ce2b676d39645ce42aeb')},true)
+
+
+db.menus.update({}, {
+  $set: {
+    src: 'default.png'
+  }
+}, {
+  multi:true
+})
+
+db.menus.remove({ _id: ObjectId('5c4f7d6097d142c1857a2c50') }, true);
+db.menus.remove({ _id: ObjectId('5c4f7f435f2c6ec2b4b59ee0') }, true);
+
+db.categorymenus.remove({ _id: ObjectId('5c3e32df7ae11e0e5dc98485') }, true);

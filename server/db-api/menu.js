@@ -17,7 +17,7 @@ export default {
 
   findAllCategory: (_id, sort = 'createdAt') => {
     debug('Finding all menu of category')
-    return Menu.find({ category: _id, status: true }).populate('prices').populate({ path: 'category'}).sort(sort)
+    return Menu.find({ category: _id, status: true }).populate('prices').populate('discounts').populate({ path: 'category'}).sort(sort)
   },
 
   findById: (_id) => {
