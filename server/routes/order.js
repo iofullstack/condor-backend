@@ -1,5 +1,5 @@
 import express from 'express'
-import { required, orderDayMiddleware, orderMiddleware, orderDayArchivedMiddleware } from '../middleware'
+import { required, orderDayMiddleware, orderMiddleware, orderDayArchivedMiddleware, orderDeleteMiddleware } from '../middleware'
 import { order, saucer, table } from '../db-api'
 import { handleError } from '../utils'
 import { time } from '../config'
@@ -10,6 +10,16 @@ const app = express.Router()
 app.get('/', async (req, res) => {
   try {
     const orders = await order.findAll()
+    res.status(200).json(orders)
+  } catch (error) {
+    handleError(error, res)
+  }
+})
+
+// GET /api/orders/deleted
+app.get('/deleted', async (req, res) => {
+  try {
+    const orders = await order.findAllDeleted()
     res.status(200).json(orders)
   } catch (error) {
     handleError(error, res)
@@ -54,6 +64,18 @@ app.get('/today/table/:id', async (req, res) => {
 app.get('/:id', orderMiddleware, (req, res) => {
   try {
     res.status(200).json(req.order)
+  } catch (error) {
+    handleError(error, res)
+  }
+})
+
+// GET /api/orders/delete/:id
+app.get('/delete/:id', orderDeleteMiddleware, (req, res) => {
+  try {
+    if(req.order)
+      res.status(200).json({ message: 'Order delete' })
+    else
+      res.status(200).json({ message: 'Error: OrderDelete' })
   } catch (error) {
     handleError(error, res)
   }

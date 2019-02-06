@@ -27,3 +27,12 @@ export const orderDayArchivedMiddleware = async (req, res, next) => {
     handleError(error, res)
   }
 }
+
+export const orderDeleteMiddleware = async (req, res, next) => {
+  try {
+    req.order = await order.delete(req.params.id)
+    next()
+  } catch (error) {
+    handleError(error, res)
+  }
+}

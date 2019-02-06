@@ -17,6 +17,19 @@ export default {
     return Order.find({ status: true }).populate({ path: 'tables'}).sort(sort)
   },
 
+  findAllDeleted: (sort = '-createdAt') => {
+    debug('Find all Order Deleted')
+    return Order.find({ status: false })
+                .populate({ path: 'tables' })
+                .populate({
+                  path: 'saucers',
+                  populate: {
+                    path: 'menu',
+                    populate: { path: 'category' }
+                  }
+                }).sort(sort)
+  },
+
   findAllDay: (day, sort = '-createdAt', viewed = true, carry = false) => {
     debug('Finding all Orders by Day')
     const start = `${day}T00:00:00Z`
@@ -114,6 +127,11 @@ export default {
     debug(`Creating new order ${o}`)
     const order = new Order(o)
     return order.save()
+  },
+
+  delete: async (_id) => {
+    debug(`Updating status order ${_id}`)
+    return Order.updateOne( { _id }, { $set: {status: false} } )
   },
 
   printCook: (obj) => {
