@@ -419,6 +419,14 @@ db.menus.update({}, {
   multi:true
 })
 
+db.orders.update({}, {
+  $set: {
+    viewedCook: true
+  }
+}, {
+  multi:true
+})
+
 db.menus.remove({ _id: ObjectId('5c4f7d6097d142c1857a2c50') }, true);
 db.menus.remove({ _id: ObjectId('5c4f7f435f2c6ec2b4b59ee0') }, true);
 

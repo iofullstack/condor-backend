@@ -11,7 +11,8 @@ const OrderSchema = new Schema({
   saucers: [{ type: ObjectId, ref: 'Saucer', required: true }],
   createdAt: { type: Date, required: true },
   status: { type: Boolean, required: true, default: true },
-  viewed: { type: Boolean, required: true, default: true }
+  viewed: { type: Boolean, required: true, default: true },
+  viewedCook: { type: Boolean, required: true, default: true }
 })
 
 export default mongoose.model('Order', OrderSchema)

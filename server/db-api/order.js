@@ -30,6 +30,23 @@ export default {
                 }).sort(sort)
   },
 
+  findAllDayCook: (day, sort = '-createdAt', viewedCook = true) => {
+    debug('Finding all Orders by Day on Cook')
+    const start = `${day}T00:00:00Z`
+    const end = `${day}T23:59:59Z`
+
+    return Order.find({ 'createdAt': {'$gte': start, '$lte': end}, status: true, viewedCook })
+                .populate({ path: 'tables' })
+                .populate({
+                  path: 'saucers',
+                  populate: {
+                    path: 'menu',
+                    match: { status: true },
+                    populate: { path: 'category' }
+                  }
+                }).sort(sort)
+  },
+
   findAllDay: (day, sort = '-createdAt', viewed = true, carry = false) => {
     debug('Finding all Orders by Day')
     const start = `${day}T00:00:00Z`
@@ -77,6 +94,11 @@ export default {
   updateViewed: (_id) => {
     debug(`Updating Order viewed ${_id}`)
     return Order.updateOne( { _id }, { $set: {viewed: false} } )
+  },
+
+  updateViewedCook: (_id) => {
+    debug(`Updating Order viewedCook ${_id}`)
+    return Order.updateOne( { _id }, { $set: {viewedCook: false} } )
   },
 
   addBox: async (_id) => {

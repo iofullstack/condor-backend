@@ -37,11 +37,11 @@ app.get('/today', async (req, res) => {
   }
 })
 
-// GET /api/orders/today
+// GET /api/orders/today/cook
 app.get('/today/cook', async (req, res) => {
   try {
     const day = time().toISOString().slice(0,10)
-    const orders = await order.findAllDay(day, '-createdAt', true, false)
+    const orders = await order.findAllDayCook(day, '-createdAt')
 
     res.status(200).json(orders)
   } catch (error) {
@@ -133,6 +133,21 @@ app.get('/:id/hide', async (req, res) => {
       await order.updateViewed(id)
       res.status(200).json({ error: false, message: 'Pedido guardado y almacenado en caja' })
     }
+  } catch (error) {
+    handleError(error, res)
+  }
+})
+
+// GET /api/orders/:id/hideViewedCook
+app.get('/:id/hideViewedCook', async (req, res) => {
+  try {
+    const id = req.params.id
+    const hideOrderCook = await order.updateViewedCook(id)
+
+    if ( hideOrderCook )
+      res.status(200).json({ error: false, hideOrderCook, message: 'Preparó el pedido' })
+    else
+      res.status(200).json({ error: true, hideOrderCook, message: 'Se produjo un error' })
   } catch (error) {
     handleError(error, res)
   }
