@@ -30,6 +30,19 @@ export default {
                 }).sort(sort)
   },
 
+  findAllHideViewed: (sort = '-createdAt') => {
+    debug('Find all Order hide viewed')
+    return Order.find({ status: true, viewed: true })
+                .populate({ path: 'tables' })
+                .populate({
+                  path: 'saucers',
+                  populate: {
+                    path: 'menu',
+                    populate: { path: 'category' }
+                  }
+                }).sort(sort)
+  },
+
   findAllDayCook: (day, sort = '-createdAt', viewedCook = true) => {
     debug('Finding all Orders by Day on Cook')
     const start = `${day}T00:00:00Z`

@@ -3,7 +3,7 @@ import base64ToImage from 'base64-to-image'
 
 export const pathAvatarMiddleware = (req, res, next) => {
   try {
-    req.img_path = '../angular-condor/img/avatar/'
+    req.img_path = '../angular-condor/dist/assets/img/avatar/'
     next()
   } catch (err) {
     handleError(err, res)
@@ -12,7 +12,7 @@ export const pathAvatarMiddleware = (req, res, next) => {
 
 export const pathMenuMiddleware = (req, res, next) => {
   try {
-    req.img_path = '../angular-condor/img/menu/'
+    req.img_path = '../angular-condor/dist/assets/img/menu/'
     next()
   } catch (err) {
     handleError(err, res)

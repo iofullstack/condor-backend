@@ -19,8 +19,9 @@ app.get('/', async (req, res) => {
 // GET /api/orders/deleted
 app.get('/deleted', async (req, res) => {
   try {
-    const orders = await order.findAllDeleted()
-    res.status(200).json(orders)
+    const ordersDeleted = await order.findAllDeleted()
+    const ordersNotArchived = await order.findAllHideViewed()
+    res.status(200).json({ deleted: ordersDeleted, notArchived: ordersNotArchived})
   } catch (error) {
     handleError(error, res)
   }
