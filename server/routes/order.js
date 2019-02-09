@@ -74,9 +74,9 @@ app.get('/:id', orderMiddleware, (req, res) => {
 app.get('/delete/:id', orderDeleteMiddleware, (req, res) => {
   try {
     if(req.order)
-      res.status(200).json({ message: 'Order delete' })
+      res.status(200).json({ error: false, message: 'Order delete' })
     else
-      res.status(200).json({ message: 'Error: OrderDelete' })
+      res.status(200).json({ error: true, message: 'Error: No se puede eliminar, por que ya fué archivado' })
   } catch (error) {
     handleError(error, res)
   }

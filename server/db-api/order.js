@@ -166,7 +166,11 @@ export default {
 
   delete: async (_id) => {
     debug(`Updating status order ${_id}`)
-    return Order.updateOne( { _id }, { $set: {status: false} } )
+    let order = await Order.findOne({ _id, viewed: true })
+    if(order)
+      return Order.updateOne( { _id }, { $set: {status: false} } )
+    else
+      return false
   },
 
   printCook: (obj) => {
