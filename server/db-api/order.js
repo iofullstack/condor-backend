@@ -142,6 +142,33 @@ export default {
     // return box.save()
   },
 
+  addBoxAllOrders: async (orders) => {
+    debug(`Update accumulated box all orders`)
+    const box = await Box.findOne({ day: time().toISOString().slice(0,10) })
+    if(!box)
+      return {
+        error: true,
+        message: 'Primero debe abrir caja'
+      }
+    const uBox = box.period[box.period.length - 1]
+    if(uBox.closing == '') {
+      orders.forEach((order) => {
+        let total = 0
+        order.saucers.forEach((element) => {
+          total += element.price
+        })
+        uBox.accumulated += total
+      })
+      return box.save()
+    } else {
+      return {
+        error: true,
+        message: 'Primero debe abrir caja'
+      }
+    }
+    // return box.save()
+  },
+
   findById: (_id) => {
     debug(`Find Order with id ${_id}`)
     return Order.findOne({ _id, status: true })

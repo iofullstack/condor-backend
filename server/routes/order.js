@@ -170,6 +170,24 @@ app.get('/day/:day/amount', orderDayMiddleware, async (req, res) => {
   }
 })
 
+// POST /api/orders/hide/all
+app.post('/hide/all', async (req, res) => {
+  try {
+    const orders = req.body
+    const orderBox = await order.addBoxAllOrders(orders)
+    if(orderBox.error)
+      res.status(200).json({ error: orderBox.error, message: orderBox.message })
+    else {
+      orders.forEach(async (element) => {
+        await order.updateViewed(element._id)
+      })
+      res.status(200).json({ error: false, message: 'Pedidos almacenados en caja' })
+    }
+  } catch (error) {
+    handleError(error, res)
+  }
+})
+
 // POST /api/orders/extract
 app.post('/extract', (req, res) => {
   try {
