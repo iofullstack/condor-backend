@@ -43,6 +43,10 @@ export default {
     return Menu.updateOne( { _id: data._id }, { $set: { src: data.src } } )
   },
 
+  delete: (_id) => {
+    return Menu.updateOne( { _id }, { $set: { status: false } } )
+  },
+
   createPrice: async (m, p) => {
     p.createdAt = time()
     debug(`Creating new price ${p}`)

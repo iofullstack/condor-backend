@@ -96,6 +96,20 @@ app.patch('/', async (req, res) => {
   }
 })
 
+// GET /api/menu/:id
+app.delete('/:id', async (req, res) => {
+  try {
+    const d = await menu.delete(req.params.id)
+    res.status(200).json({
+      message: 'Menu eliminado',
+      response: d
+    })
+  } catch (error) {
+    console.log(error)
+    handleError(error, res)
+  }
+})
+
 // POST /api/menu/:id/price
 // app.post('/:id/price', required, roleMiddleware, async (req, res) => {
 app.post('/:id/price', menuMiddleware, async (req, res) => {
