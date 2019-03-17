@@ -33,6 +33,16 @@ export default {
     return menu.save()
   },
 
+  update: (data) => {
+    debug(`Updating menu occupied ${data._id}`)
+    return Menu.updateOne( { _id: data._id }, { $set: { code: data.code, contain: data.contain, type: data.type, extra: data.extra } } )
+  },
+
+  updateImg: (data) => {
+    debug(`Updating image menu occupied ${data._id}`)
+    return Menu.updateOne( { _id: data._id }, { $set: { src: data.src } } )
+  },
+
   createPrice: async (m, p) => {
     p.createdAt = time()
     debug(`Creating new price ${p}`)

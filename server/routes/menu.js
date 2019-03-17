@@ -61,6 +61,41 @@ app.post('/', pathMenuMiddleware, imageMiddleware, async (req, res) => {
 
 })
 
+// PATCH /api/menu/img
+app.patch('/img', pathMenuMiddleware, imageMiddleware, async (req, res) => {
+  const m = req.body
+  m.src = req.imageInfo.fileName
+  const d = {
+    _id: m._id,
+    src: m.src
+  }
+
+  try {
+    const updateImgMenu = await menu.updateImg(d)
+    res.status(201).json({
+      message: 'Image update',
+      response: updateImgMenu
+    })
+  } catch (error) {
+    handleError(error, res)
+  }
+})
+
+// PATCH /api/menu
+app.patch('/', async (req, res) => {
+  const m = req.body
+
+  try {
+    const updateMenu = await menu.update(m)
+    res.status(201).json({
+      message: 'Menu update',
+      response: updateMenu
+    })
+  } catch (error) {
+    handleError(error, res)
+  }
+})
+
 // POST /api/menu/:id/price
 // app.post('/:id/price', required, roleMiddleware, async (req, res) => {
 app.post('/:id/price', menuMiddleware, async (req, res) => {
