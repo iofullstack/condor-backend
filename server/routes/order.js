@@ -94,7 +94,7 @@ app.get('/day/:day', orderDayArchivedMiddleware, async (req, res) => {
           extras.push({
             _id : ex._id,
             name: ex.name,
-            price: ex.price,
+            price: ex.price*el.quantity,
             quantity: el.quantity
           })
           totalExtras += ex.price * el.quantity
